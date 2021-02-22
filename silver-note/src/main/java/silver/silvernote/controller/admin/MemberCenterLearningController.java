@@ -34,7 +34,7 @@ public class MemberCenterLearningController {
     /**
      * 조회
      * */
-    @GetMapping("/member-exercises")
+    @GetMapping("/member-center-learnings")
     public ResponseEntity<Message> findMemberCenterLearnings() {
 
         List<MemberCenterLearningResponseDto> collect = memberCenterLearningService.findMemberCenterLearnings().stream().map(MemberCenterLearningResponseDto::new).collect(Collectors.toList());
@@ -47,7 +47,7 @@ public class MemberCenterLearningController {
     /**
      * 생성
      * */
-    @PostMapping("/member-exercises/new")
+    @PostMapping("/member-center-learnings/new")
     public ResponseEntity<Message> saveMemberCenterLearning(@RequestBody @Valid MemberCenterLearningRequestDto request) {
         Member member = memberService.findOne(request.getMemberId()).orElseThrow(NoSuchElementException::new);
         CenterLearning centerLearning = centerLearningService.findOne(request.getCenterLearningId()).orElseThrow(NoSuchElementException::new);
@@ -69,7 +69,7 @@ public class MemberCenterLearningController {
     /**
      * 수정
      * */
-    @PutMapping("/member-exercises/{id}")
+    @PutMapping("/member-center-learnings/{id}")
     public ResponseEntity<Message> updateProgress(@PathVariable("id") Long id, @RequestParam("progress") int progress) {
 
         memberCenterLearningService.updateProgress(id, progress);
@@ -85,7 +85,7 @@ public class MemberCenterLearningController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/member-exercises/{id}")
+    @DeleteMapping("/member-center-learnings/{id}")
     public ResponseEntity<Message> deleteMemberCenterLearning(@PathVariable("id") Long id) {
 
         memberCenterLearningService.deleteMemberCenterLearning(id);

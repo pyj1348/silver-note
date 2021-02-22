@@ -33,7 +33,7 @@ public class NotificationController {
     /**
      * 조회
      * */
-    @GetMapping("/items")
+    @GetMapping("/notifications")
     public ResponseEntity<Message> findNotifications() {
         List<NotificationResponseDto> collect = notificationService.findNotifications().stream().map(NotificationResponseDto::new).collect(Collectors.toList());
 
@@ -46,7 +46,7 @@ public class NotificationController {
     /**
      * 생성
      * */
-    @PostMapping("/items/new")
+    @PostMapping("/notifications/new")
     public ResponseEntity<Message> saveNotification(@RequestBody @Valid NotificationRequestDto request) {
 
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
@@ -68,7 +68,7 @@ public class NotificationController {
     /**
      * 수정
      * */
-    @PutMapping("/items/{id}")
+    @PutMapping("/notifications/{id}")
     public ResponseEntity<Message> updateData(@PathVariable("id") Long id,
                                               @RequestBody NotificationUpdateRequestDto request) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
 
@@ -83,7 +83,7 @@ public class NotificationController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/items/{id}")
+    @DeleteMapping("/notifications/{id}")
     public ResponseEntity<Message> deleteNotification(@PathVariable("id") Long id) {
 
         notificationService.deleteNotification(id);

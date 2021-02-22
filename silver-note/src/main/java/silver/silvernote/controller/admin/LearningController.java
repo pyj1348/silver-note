@@ -27,7 +27,7 @@ public class LearningController {
     /**
      * 조회
      * */
-    @GetMapping("/member-exercises")
+    @GetMapping("/learnings")
     public ResponseEntity<Message> findLearnings() {
 
         List<LearningResponseDto> collect = learningService.findLearnings().stream().map(LearningResponseDto::new).collect(Collectors.toList());
@@ -40,8 +40,8 @@ public class LearningController {
     /**
      * 생성
      * */
-    @PostMapping("/member-exercises/new")
-    public ResponseEntity<Message> saveLearning(@RequestBody @Valid LearningController.LearningRequestDto request) {
+    @PostMapping("/learnings/new")
+    public ResponseEntity<Message> saveLearning(@RequestBody @Valid LearningRequestDto request) {
         Learning learning = Learning.BuilderByParam()
                     .name(request.getName())
                     .description(request.getDescription())
@@ -59,7 +59,7 @@ public class LearningController {
     /**
      * 수정
      * */
-    @PutMapping("/member-exercises/{id}")
+    @PutMapping("/learnings/{id}")
     public ResponseEntity<Message> updateLearning(@PathVariable("id") Long id, @RequestBody LearningRequestDto request) {
 
         learningService.updateData(id, request.getName(), request.getUrl(), request.getDescription());
@@ -73,7 +73,7 @@ public class LearningController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/member-exercises/{id}")
+    @DeleteMapping("/learnings/{id}")
     public ResponseEntity<Message> deleteLearning(@PathVariable("id") Long id) {
 
         learningService.deleteLearning(id);

@@ -20,7 +20,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -35,7 +37,7 @@ public class CenterLearningController {
     /**
      * 조회
      * */
-    @GetMapping("/member-exercises")
+    @GetMapping("/center-learnings")
     public ResponseEntity<Message> findCenterLearnings() {
 
         List<CenterLearningResponseDto> collect = centerLearningService.findCenterLearnings().stream().map(CenterLearningResponseDto::new).collect(Collectors.toList());
@@ -48,21 +50,33 @@ public class CenterLearningController {
     /**
      * 생성
      * */
-    @PostMapping("/member-exercises/new")
+    @PostMapping("/center-learnings/new")
     public ResponseEntity<Message> saveCenterLearning(@RequestBody @Valid CenterLearningRequestDto request) {
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
-        Learning learning = learningService.findOne(request.getLearningId()).orElseThrow(NoSuchElementException::new);
 
-        CenterLearning centerLearning = CenterLearning.BuilderByParam()
-                    .date(request.getDate())
-                    .center(center)
-                    .learning(learning)
-                    .build();
+        Map<LocalDate, List<Long>> data = request.getData();
 
-        centerLearningService.save(centerLearning);
+
+        for(LocalDate date : data.keySet()){
+            List<Long> learningIds = data.get(date);
+
+            for(Long learningId : learningIds){
+
+                Learning learning = learningService.findOne(learningId).orElseThrow(NoSuchElementException::new);
+
+                CenterLearning centerLearning = CenterLearning.BuilderByParam()
+                        .date(date)
+                        .center(center)
+                        .learning(learning)
+                        .build();
+
+                centerLearningService.save(centerLearning);
+
+            }
+        }
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(centerLearning.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", LocalDateTime.now()), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.CREATED);
     }
@@ -73,7 +87,7 @@ public class CenterLearningController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/member-exercises/{id}")
+    @DeleteMapping("/center-learnings/{id}")
     public ResponseEntity<Message> deleteCenterLearning(@PathVariable("id") Long id) {
 
         centerLearningService.deleteCenterLearning(id);
@@ -90,14 +104,12 @@ public class CenterLearningController {
      * */
     @Data
     static class CenterLearningRequestDto {
-        @NotNull(message = "날짜를 확인하세요")
-        private LocalDate date;
 
         @NotNull(message = "센터 ID를 확인하세요")
         private Long centerId;
 
-        @NotNull(message = "학습 ID를 확인하세요")
-        private Long learningId;
+        @NotNull(message = "데이터를 확인하세요 ( key : LocalDate / value: List of CenterId ")
+        private Map<@NotNull(message = "날짜를 확인하세요")LocalDate, @NotNull(message = "학습 ID를 확인하세요") List<Long>> data;
 
     }
 

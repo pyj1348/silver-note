@@ -36,7 +36,7 @@ public class AlbumController {
     /**
      * 조회
      * */
-    @GetMapping("/orders")
+    @GetMapping("/albums")
     public ResponseEntity<Message> findAlbums() {
         List<AlbumResponseDto> collect = albumService.findAlbums().stream().map(AlbumResponseDto::new).collect(Collectors.toList());
 
@@ -49,7 +49,7 @@ public class AlbumController {
     /**
      * 생성
      * */
-    @PostMapping("/orders/new")
+    @PostMapping("/albums/new")
     public ResponseEntity<Message> saveAlbum(@RequestBody @Valid AlbumRequestDto request) {
 
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
@@ -74,7 +74,7 @@ public class AlbumController {
     /**
      * 수정
      * */
-    @PutMapping("/orders/{id}")
+    @PutMapping("/albums/{id}")
     public ResponseEntity<Message> updateData(@PathVariable("id") Long id,
                                               @RequestBody @Valid AlbumUpdateRequestDto request) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
 
@@ -89,7 +89,7 @@ public class AlbumController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/orders/{id}")
+    @DeleteMapping("/albums/{id}")
     public ResponseEntity<Message> deleteAlbum(@PathVariable("id") Long id) {
 
         albumService.deleteAlbum(id);

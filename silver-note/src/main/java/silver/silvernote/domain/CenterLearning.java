@@ -16,7 +16,7 @@ public class CenterLearning {
 
     @Id
     @GeneratedValue
-    @Column(name = "center_study_id")
+    @Column(name = "center_learning_id")
     private Long id;
 
     @NotNull

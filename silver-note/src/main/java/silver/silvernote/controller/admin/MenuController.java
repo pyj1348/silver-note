@@ -84,7 +84,7 @@ public class MenuController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/meals/{id}")
+    @DeleteMapping("/menus/{id}")
     public ResponseEntity<Message> deleteItem(@PathVariable("id") Long id) {
 
         menuService.deleteMenu(id);

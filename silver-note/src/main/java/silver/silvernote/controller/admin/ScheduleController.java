@@ -33,7 +33,7 @@ public class ScheduleController {
     /**
      * 조회
      * */
-    @GetMapping("/items")
+    @GetMapping("/schedules")
     public ResponseEntity<Message> findSchedules() {
         List<ScheduleResponseDto> collect = scheduleService.findSchedules().stream().map(ScheduleResponseDto::new).collect(Collectors.toList());
 
@@ -46,7 +46,7 @@ public class ScheduleController {
     /**
      * 생성
      * */
-    @PostMapping("/items/new")
+    @PostMapping("/schedules/new")
     public ResponseEntity<Message> saveSchedule(@RequestBody @Valid ScheduleController.ScheduleRequestDto request) {
 
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
@@ -68,7 +68,7 @@ public class ScheduleController {
     /**
      * 수정
      * */
-    @PutMapping("/items/{id}")
+    @PutMapping("/schedules/{id}")
     public ResponseEntity<Message> updateContext(@PathVariable("id") Long id,
                                               @RequestBody String context) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
 
@@ -83,7 +83,7 @@ public class ScheduleController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/items/{id}")
+    @DeleteMapping("/schedules/{id}")
     public ResponseEntity<Message> deleteSchedule(@PathVariable("id") Long id) {
 
         scheduleService.deleteSchedule(id);

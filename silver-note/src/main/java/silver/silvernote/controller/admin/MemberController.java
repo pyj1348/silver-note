@@ -37,29 +37,15 @@ public class MemberController {
      * */
 
 
-
-
     @GetMapping("/members")
-    public ResponseEntity<Message> findMembers(@RequestBody TypeFilter filter) {
+    public ResponseEntity<Message> findMembers() {
 
         Map<String, List<MembersResponseDto>> members = new HashMap<>();
 
-        if (filter.isManager()) {
-            List<MembersResponseDto> collect = memberService.findManagers().stream().map(MembersResponseDto::new).collect(Collectors.toList());
-            members.put("manager", collect);
-        }
-        if (filter.isEmployee()){
-            List<MembersResponseDto> collect = memberService.findEmployees().stream().map(MembersResponseDto::new).collect(Collectors.toList());
-            members.put("employee", collect);
-        }
-        if (filter.isPatient()){
-            List<MembersResponseDto> collect = memberService.findPatients().stream().map(MembersResponseDto::new).collect(Collectors.toList());
-            members.put("patient", collect);
-        }
-        if (filter.isFamily()) {
-            List<MembersResponseDto> collect = memberService.findFamilies().stream().map(MembersResponseDto::new).collect(Collectors.toList());
-            members.put("family", collect);
-        }
+        members.put("manager", memberService.findManagers().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
+        members.put("employee", memberService.findEmployees().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
+        members.put("patient", memberService.findPatients().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
+        members.put("family", memberService.findFamilies().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", members), // STATUS, MESSAGE, DATA

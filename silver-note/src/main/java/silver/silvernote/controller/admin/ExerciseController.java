@@ -29,7 +29,7 @@ public class ExerciseController {
     /**
      * 조회
      * */
-    @GetMapping("/admin/exercises")
+    @GetMapping("/exercises")
     public ResponseEntity<Message> findExercises() {
 
         List<ExerciseResponseDto> collect = exerciseService.findExercises().stream().map(ExerciseResponseDto::new).collect(Collectors.toList());
@@ -43,7 +43,7 @@ public class ExerciseController {
     /**
      * 생성
      * */
-    @PostMapping("/admin/exercises/new")
+    @PostMapping("/exercises/new")
     public ResponseEntity<Message> saveExercise(@RequestBody @Valid ExerciseController.ExerciseRequestDto request) {
         Exercise exercise = Exercise.BuilderByParam()
                 .name(request.getName())
@@ -62,7 +62,7 @@ public class ExerciseController {
     /**
      * 수정
      * */
-    @PutMapping("/admin/exercises/{id}/")
+    @PutMapping("/exercises/{id}/")
     public ResponseEntity<Message> updateExercise(@PathVariable("id") Long id,
                                                   @RequestBody ExerciseRequestDto request) {
 
@@ -77,8 +77,8 @@ public class ExerciseController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/admin/exercises/{id}")
-    public ResponseEntity<Message> deleteMember(@PathVariable("id") Long id) {
+    @DeleteMapping("/exercises/{id}")
+    public ResponseEntity<Message> deleteExercise(@PathVariable("id") Long id) {
 
         exerciseService.deleteExercise(id);
 
