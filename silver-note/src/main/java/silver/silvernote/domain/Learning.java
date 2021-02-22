@@ -19,7 +19,7 @@ public class Learning {
 
     @Id
     @GeneratedValue
-    @Column(name = "study_id")
+    @Column(name = "learning_id")
     private Long id;
 
     @NotBlank

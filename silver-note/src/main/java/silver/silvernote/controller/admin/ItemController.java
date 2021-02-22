@@ -43,7 +43,7 @@ public class ItemController {
      * 생성
      * */
     @PostMapping("/items/new")
-    public ResponseEntity<Message> saveItem(@RequestBody @Valid ItemController.ItemRequestDto request) {
+    public ResponseEntity<Message> saveItem(@RequestBody @Valid ItemRequestDto request) {
         Item item = Item.BuilderByParam()
                     .name(request.getName())
                     .price(request.getPrice())

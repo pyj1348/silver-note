@@ -35,8 +35,6 @@ public class MemberController {
     /**
      * 조회
      * */
-
-
     @GetMapping("/members")
     public ResponseEntity<Message> findMembers() {
 
