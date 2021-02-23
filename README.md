@@ -7,7 +7,7 @@
 
 ## Services
 
-### 1. Member
+### 1. Member 멤버
 
 * 조회
 
@@ -58,7 +58,7 @@
         - type : "approve" | "decline" 
 
 
-### 2. Center
+### 2. Center 센터
 
 * 조회
 
@@ -94,7 +94,7 @@
     - URL : "/centers/{id}"
 
 
-### 3. Notification
+### 3. Notification 공지
 
 * 조회
 
@@ -125,7 +125,7 @@
     - URL : "/notifications/{id}"
     
 
-### 4. Album
+### 4. Album 앨범
 
 * 조회
 
@@ -157,7 +157,7 @@
     - URL : "/albums/{id}"
     
 
-### 5. Menu
+### 5. Menu 식단
 
 * 조회
 
@@ -185,7 +185,7 @@
     - 방식 : DELETE 
     - URL : "/menus/{id}"
 
-### 6. Schedule
+### 6. Schedule 일정
 
 * 조회
 
@@ -213,7 +213,7 @@
     - 방식 : DELETE 
     - URL : "/schedules/{id}"
 
-### 7. Item
+### 7. Item 상품
 
 * 조회
 
@@ -240,7 +240,7 @@
     - 방식 : DELETE 
     - URL : "/items/{id}"
 
-### 8. Order
+### 8. Order 구매
 
 * 조회
 
@@ -262,7 +262,7 @@
     - 방식 : DELETE 
     - URL : "/orders/{id}"
 
-### 9. Exercise
+### 9. Exercise 운동
 
 * 조회
 
@@ -292,7 +292,7 @@
     - 방식 : DELETE 
     - URL : "/exercises/{id}"
 
-### 10. Member - Exercise
+### 10. Member - Exercise 운동내역
 
 * 조회
 
@@ -319,7 +319,7 @@
     - 방식 : DELETE 
     - URL : "/member-exercises/{id}"
 
-### 11. Learning
+### 11. Learning 학습
 
 * 조회
 
@@ -349,7 +349,7 @@
     - 방식 : DELETE 
     - URL : "/learnings/{id}"
 
-### 12. Center - Learning
+### 12. Center - Learning 센터별 학습
 
 * 조회
 
@@ -369,7 +369,7 @@
     - 방식 : DELETE 
     - URL : "/center-learnings/{id}"
 
-### 13. Member - Center - Learning
+### 13. Member - Center - Learning 센터별학습 수강내역
 
 * 조회
 
