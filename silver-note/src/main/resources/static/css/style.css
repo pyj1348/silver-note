@@ -1,0 +1,267 @@
+:root {
+  font-family: "Noto Sans KR", sans-serif;
+
+  /* Color */
+  --color-white: #ffffff;
+  --color-light-white: #eeeeee;
+  --color-dark-white: #bdbdbd;
+  --color-pink: #f7f6e7;
+  --color-dark-pink: #ff6863;
+  --color-dark-grey: #4d4d4d;
+  --color-grey: #616161;
+  --color-light-grey: #7c7979;
+  --color-blue: #73aace;
+  --color-yellow: #fff7d1;
+  --color-orange: #feb546;
+  --color-black: #000000;
+
+  /* Font size */
+  --font-large: 48px;
+  --font-medium: 28px;
+  --font-regular: 18px;
+  --font-small: 16px;
+  --font-micro: 14px;
+
+  /* Font weight */
+  --weight-bold: 700;
+  --weight-semi-bold: 600;
+  --weight-regular: 400;
+
+  /* Size */
+  --size-border-radius: 4px;
+
+  /* Animation */
+  --animation-duration: 300ms;
+}
+
+/* Universal tags */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  //font-family: "Open Sans", sans-serif;
+  cursor: default;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-while);
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+table {
+  width: 100%;
+  border: 1px solid #444444;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px, solid #444444;
+  padding: 10px;
+}
+
+.person-table__header {
+  background-color: #f4f9f9;
+}
+
+/* Typography */
+
+h1 {
+  font-size: var(--font-large);
+  font-weight: var(--weight-bold);
+  color: var(--color-black);
+  margin: 16px 0px;
+}
+
+h2 {
+  font-size: var(--font-medium);
+  font-weight: var(--weight-semi-bold);
+  color: var(--color-black);
+  margin: 8px 8px;
+}
+
+h3 {
+  font-size: var(--font-regular);
+  font-weight: var(--weight-regular);
+  color: var(--color-black);
+  margin: 8px 0;
+}
+
+p {
+  font-size: var(--font-regular);
+  font-weight: var(--weight-regular);
+  color: var(--color-black);
+  margin: 4px 0;
+}
+
+/* Navbar */
+
+#navbar {
+  background-color: var(--color-dark-grey);
+  color: var(--color-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar__logo {
+  margin: 15px;
+}
+
+.navbar__menu {
+  display: flex;
+  margin: 5px;
+}
+
+.navbar__menu__item {
+  margin: 0 10px;
+}
+
+.section-container {
+  display: flex;
+}
+
+#menu {
+  background-color: var(--color-pink);
+  min-width: 200px;
+  color: var(--color-grey);
+  padding: 15px;
+}
+
+.menu-list__item {
+  margin-bottom: 10px;
+}
+
+#person-list {
+  min-width: 400px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.month-selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.person-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.person-control__add,
+.person-control__remove {
+  width: 50%;
+  background-color: var(--color-light-grey);
+  margin: 5px;
+  padding: 5px;
+  color: var(--color-white);
+  border-radius: var(--size-border-radius);
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-pink);
+  padding: 15px;
+}
+
+.content__top {
+  display: flex;
+  flex-direction: row;
+}
+
+.problem-category {
+  margin: 15px;
+}
+
+.table-box {
+  background-color: white;
+  padding: 15px;
+}
+
+.problem-category__table {
+  min-height: 300px;
+  min-width: 350px;
+}
+
+.problem-header {
+  background-color: #f4f9f9;
+  text-align: center;
+  font-weight: var(--weight-semi-bold);
+  height: 14.2%;
+}
+
+.problem__button {
+  background-color: var(--color-dark-grey);
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
+}
+
+.problems {
+  margin: 15px;
+  min-height: 400px;
+}
+
+.problems__table {
+  min-height: 305px;
+  min-width: 500px;
+}
+
+.problems__td {
+  height: 35px;
+  width: 33.3%;
+}
+
+.remark {
+  margin: 15px;
+}
+
+.remark__content {
+  background-color: var(--color-white);
+  min-height: 336.36px;
+  max-width: 350px;
+  padding: 20px;
+}
+
+.schedule {
+  padding: 15px;
+}
+
+#calendar {
+  border-color: var(--color-light-grey);
+}
+
+.calendar__index {
+  background-color: #f4f9f9;
+  text-align: center;
+  width: 12.5%;
+}
+
+.calendar__number {
+  background-color: #f4f9f9;
+  width: 12.5%;
+}

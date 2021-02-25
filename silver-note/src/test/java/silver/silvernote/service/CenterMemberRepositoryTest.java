@@ -25,11 +25,11 @@ public class CenterMemberRepositoryTest {
     @Autowired CenterService centerService;
 
     @Test
-    public void ¼¾ÅÍµî·Ï() throws Exception {
+    public void join_center() throws Exception {
         //given
-        Address address = createAddress("´ë±¸", "µ¿¼º·Î", "155");
+        Address address = createAddress("ëŒ€êµ¬", "ë™ì„±ë¡œ", "155");
 
-        Center center = createCenter("µ¿ÀÛ¼¾ÅÍ", "02-0000-0000", "¾øÀ½", address);
+        Center center = createCenter("ë™ìž‘ì„¼í„°", "02-0000-0000", "ì—†ìŒ", address);
 
         //when
         Long centerId = centerService.save(center);
@@ -40,48 +40,48 @@ public class CenterMemberRepositoryTest {
     }
 
     @Test
-    public void °¡ÀÔ() {
-        Address address = createAddress("´ë±¸", "µ¿¼º·Î", "155");
+    public void join_member() {
+        Address address = createAddress("ëŒ€êµ¬", "ë™ì„±ë¡œ", "155");
 
-        Center center = createCenter("µ¿ÀÛ¼¾ÅÍ", "02-0000-0000", "¾øÀ½", address);
+        Center center = createCenter("ë™ìž‘ì„¼í„°", "02-0000-0000", "ì—†ìŒ", address);
 
         centerService.save(center);
 
-        Member member = createManager(center,"userC","³²", "950512-1779015", "010-9921-4156", address);
+        Member member = createManager(center,"userC","ë‚¨", "950512-1779015", "010-9921-4156", address);
         Long memberId = memberService.save(member);
 
-        assertThat(member).isEqualTo(memberService.findOne(memberId).orElseGet(() -> fail("È¸¿ø°¡ÀÔ¿¡ ½ÇÆÐÇß½À´Ï´Ù")));
+        assertThat(member).isEqualTo(memberService.findOne(memberId).orElseGet(() -> fail("íšŒì›ê°€ìž…ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤")));
     }
 
     @Test
-    public void Á¶È¸() {
-        Address address = createAddress("´ë±¸", "µ¿¼º·Î", "155");
+    public void member_find() {
+        Address address = createAddress("ëŒ€êµ¬", "ë™ì„±ë¡œ", "155");
 
-        Center center = createCenter("µ¿ÀÛ¼¾ÅÍ", "02-0000-0000", "¾øÀ½", address);
+        Center center = createCenter("ë™ìž‘ì„¼í„°", "02-0000-0000", "ì—†ìŒ", address);
 
-        Member member = createManager(center,"userC", "³²", "930911-1779015", "010-9921-4156", address);
+        Member member = createManager(center,"userC", "ë‚¨", "930911-1779015", "010-9921-4156", address);
         Long memberId = memberService.save(member);
 
-        assertThat(member).isEqualTo(memberService.findOne(memberId).orElseGet(() -> fail("È¸¿ø°¡ÀÔ¿¡ ½ÇÆÐÇß½À´Ï´Ù")));
+        assertThat(member).isEqualTo(memberService.findOne(memberId).orElseGet(() -> fail("íšŒì›ê°€ìž…ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤")));
     }
 
     @Test
-    public void °¡ÀÔ½ÇÆÐ_ÀÌ¸§°ø¹é(){
-        Address address = createAddress("´ë±¸", "µ¿¼º·Î", "155");
+    public void join_fail_blank(){
+        Address address = createAddress("ëŒ€êµ¬", "ë™ì„±ë¡œ", "155");
 
-        Center center = createCenter("µ¿ÀÛ¼¾ÅÍ", "02-0000-0000", "¾øÀ½", address);
+        Center center = createCenter("ë™ìž‘ì„¼í„°", "02-0000-0000", "ì—†ìŒ", address);
 
-        Member member = createManager(center,"","³²", "930911-1779017", "010-9921-4156", address);
+        Member member = createManager(center,"","ë‚¨", "930911-1779017", "010-9921-4156", address);
 
         assertThrows(ConstraintViolationException.class, () -> memberService.save(member));
     }
 
     @Test
-    public void °¡ÀÔ½ÇÆÐ_À¯Àú¾ÆÀÌµðÁßº¹(){
-        Address address = createAddress("´ë±¸", "µ¿¼º·Î", "155");
-        Center center = createCenter("µ¿ÀÛ¼¾ÅÍ", "02-0000-0000", "¾øÀ½", address);
+    public void join_fail_dup(){
+        Address address = createAddress("ëŒ€êµ¬", "ë™ì„±ë¡œ", "155");
+        Center center = createCenter("ë™ìž‘ì„¼í„°", "02-0000-0000", "ì—†ìŒ", address);
 
-        Member member = createManager(center,"", "³²", "930823-1779013", "010-9921-4156", address);
+        Member member = createManager(center,"", "ë‚¨", "930823-1779013", "010-9921-4156", address);
 
         assertThrows(ConstraintViolationException.class, () -> memberService.save(member));
     }

@@ -19,7 +19,7 @@ public class Manager extends Member {
     @Enumerated(EnumType.STRING)
     private PermissionStatus permission;
 
-    @PrePersist // default ¼¼ÆÃ
+    @PrePersist // default ì„¸íŒ…
     public void prePersist() {
         this.permission = this.permission == null ? PermissionStatus.WAITING : this.permission;
         super.prePersist();

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실버앱</title>
+    <meta name="description" content="Portfolio for world-renowned software engineer Saul"/>
+    <meta name="author" content="Saul"/>
+    <link rel="icon" type="image/png" href="imgs/favicon.png" />
+    <script src="https://kit.fontawesome.com/27bd47abbf.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/main.js" defer></script>
+</head>
+<body>
+        <!-- NavBar -->
+        <nav id="navbar">
+            <div class="navbar__logo">
+                <i class="fab fa-diaspora"></i>
+                <a href="#">실버앱</a>
+            </div>
+            <div class="navbar__menu">
+                <ul class="navbar__menu">
+                    <li class="navbar__menu__item active" data-link="#home">Home</li>
+                    <li class="navbar__menu__item" data-link="#about">로그인</li>
+                    <li class="navbar__menu__item" data-link="#skills">회원가입</li>
+                    <li class="navbar__menu__item" data-link="#work">공지사항</li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="section-container">
+
+            <!-- Menu -->
+            <section id="menu">
+                <div class="menu-list">
+                    <ul>
+                        <li class="menu-list__item">마이페이지</li>
+                        <li class="menu-list__item">인지활동 프로그램 생성</li>
+                        <li class="menu-list__item">문제낱장 출력</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Person List -->
+            <section id="person-list">
+                <h2>대상자 목록</h2>
+                <div class="month-selection">
+                    <button onclick="prevCalendar()" class="month-selection__previous">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="selected-date tbCalendarYM" > [2021년 02월] </span>
+                    <button onclick="nextCalendar()" class="month-selection__next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="person-control">
+                    <button class="person-control__add">대상자 추가</button>
+                    <button class="person-control__remove">대상자 삭제</button>
+                </div>
+                <table border="1" class="person-table">
+                    <th class="person-table__header"></th>
+                    <th class="person-table__header">ㅁ</th>
+                    <th class="person-table__header">담당자명</th>
+                    <th class="person-table__header">등급</th>
+                    <tr><!-- 첫번째 줄 시작 -->
+                        <td>1</td>
+                        <td>ㅁ</td>
+                        <td>박용진</td>
+                        <td>5</td>
+                    </tr><!-- 첫번째 줄 끝 -->
+                </table>
+            </section>
+
+            <section id="content">
+                <div class="content__top">
+                    <div class="problem-category">
+                        <h2>대상자 기본 정보</h2>
+                        <div class="table-box">
+                            <table border="1" class="problem-category__table">
+                                <tr>
+                                    <td colspan = "2" class="problem-header">인지영역</td>
+                                    <td class="problem-header">문제선택</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan = "2">인지활동(1)</td>
+                                    <td>시지각</td>
+                                    <td><button class="visual__btn problem__button">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td>주의집중력</td>
+                                    <td><button class="concentration__btn problem__button">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    <td rowspan = "3">인지활동(2)</td>
+                                    <td>사고능력</td>
+                                    <td><button class="thinking__btn problem__button">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    <td>언어능력</td>
+                                    <td><button class="language__btn problem__button">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    <td>회상활동</td>
+                                    <td><button class="remembrance__btn problem__button">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    <td>일상생활활동</td>
+                                    <td>일상생활활동</td>
+                                    <td><button class="life__btn problem__button">문제선택</button></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="problems">
+                        <h2>영역별 문제정보</h2>
+                        <div class="table-box">
+                            <table border="1" class="problems__table">
+                                <tr>
+                                    <td colspan = "3" class="problem-header">시지각(하) 문제 선택</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="remark">
+                        <h2>대상자 특이사항</h2>
+                        <div class="remark__content">
+                            <p>
+                                시력이 좋지 않으셔서 따라 그리시는데 제한이 있음.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content__bottom">
+                    <div class="schedule">
+                        <h2 class="tbCalendarYM" >2021년 2월</h2>
+                        <div class="table-box">
+                                
+                            <table id="calendar" border="1" align="center">
+                                <tr><!-- label은 마우스로 클릭을 편하게 해줌 -->
+
+                                </tr>
+                                <tr>
+                                    <td align="center"></td>
+                                    <td align="center"><font color ="#F79DC2">일</td>
+                                    <td align="center">월</td>
+                                    <td align="center">화</td>
+                                    <td align="center">수</td>
+                                    <td align="center">목</td>
+                                    <td align="center">금</td>
+                                    <td align="center"><font color ="skyblue">토</td>
+                                </tr> 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+    
+</body>
+</html>

@@ -28,7 +28,7 @@ public class Learning {
     private String description;
     private String url;
 
-    // ºÐ·ù?
+    // ë¶„ë¥˜?
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
     public Learning(String name, String description, String url) {
