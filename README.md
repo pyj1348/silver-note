@@ -2,12 +2,12 @@
 
 ## Description
 
-이 프로젝트는 **요양원 센터 근로자** / **요양원 어르신** / **보호자**를 타겟으로 한 일종의 커뮤니티 및 학습관리 어플리케이션의 **Java Spring Framework 기반**의 Back-end Server입니다. 지원하는 서비스는 **공지사항** / **식단** / **앨범** / **학습** / **운동** / **쇼핑** 등이 있고 이들은 JSON 형식의 REST API를 통해 제공됩니다.  
+이 프로젝트는 **요양원 센터 근로자** / **요양원 어르신** / **보호자**를 타겟으로 한 일종의 커뮤니티 및 학습관리 어플리케이션의 **Java Spring Framework와 JPA 기반**의 Back-end Server입니다. 지원하는 서비스는 **공지사항** / **식단** / **앨범** / **학습** / **운동** / **쇼핑** 등이 있고 이들은 JSON 형식의 데이터를 REST API를 통해 제공됩니다.  
 앱의 통합관리자와 센터 근로자들은 해당 서비스들을 포함하여 **센터 멤버**와 **센터 정보**를 CRUD 할 수 있고 요양원 어르신과 보호자는 센터에서 작성한 센터 정보, 앨범, 일지 등을 열람할 수 있습니다. 더불어 각 센터는 자신들의 일정에 맞게 데일리 학습을 구성할 수 있고 어르신들을 센터에서 제공하는 일정을 따라 학습과 운동을 수행할 수 있습니다.
 
 ## Services
 
-### 1. Member
+### 1. Member 멤버
 
 * 조회
 
@@ -58,7 +58,7 @@
         - type : "approve" | "decline" 
 
 
-### 2. Center
+### 2. Center 센터
 
 * 조회
 
@@ -94,7 +94,7 @@
     - URL : "/centers/{id}"
 
 
-### 3. Notification
+### 3. Notification 공지
 
 * 조회
 
@@ -125,7 +125,7 @@
     - URL : "/notifications/{id}"
     
 
-### 4. Album
+### 4. Album 앨범
 
 * 조회
 
@@ -157,7 +157,7 @@
     - URL : "/albums/{id}"
     
 
-### 5. Menu
+### 5. Menu 식단
 
 * 조회
 
@@ -185,7 +185,7 @@
     - 방식 : DELETE 
     - URL : "/menus/{id}"
 
-### 6. Schedule
+### 6. Schedule 일정
 
 * 조회
 
@@ -213,7 +213,7 @@
     - 방식 : DELETE 
     - URL : "/schedules/{id}"
 
-### 7. Item
+### 7. Item 상품
 
 * 조회
 
@@ -240,7 +240,7 @@
     - 방식 : DELETE 
     - URL : "/items/{id}"
 
-### 8. Order
+### 8. Order 구매
 
 * 조회
 
@@ -262,7 +262,7 @@
     - 방식 : DELETE 
     - URL : "/orders/{id}"
 
-### 9. Exercise
+### 9. Exercise 운동
 
 * 조회
 
@@ -292,7 +292,7 @@
     - 방식 : DELETE 
     - URL : "/exercises/{id}"
 
-### 10. Member - Exercise
+### 10. Member - Exercise 운동내역
 
 * 조회
 
@@ -319,7 +319,7 @@
     - 방식 : DELETE 
     - URL : "/member-exercises/{id}"
 
-### 11. Learning
+### 11. Learning 학습
 
 * 조회
 
@@ -349,7 +349,7 @@
     - 방식 : DELETE 
     - URL : "/learnings/{id}"
 
-### 12. Center - Learning
+### 12. Center - Learning 센터별 학습
 
 * 조회
 
@@ -369,7 +369,7 @@
     - 방식 : DELETE 
     - URL : "/center-learnings/{id}"
 
-### 13. Member - Center - Learning
+### 13. Member - Center - Learning 센터별학습 수강내역
 
 * 조회
 
