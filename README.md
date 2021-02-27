@@ -396,7 +396,47 @@
     - 방식 : DELETE 
     - URL : "/member-center-learnings/{id}"
 
+### 14. Learning-Category 학습 카테고리
 
-```python
+* 조회
 
-```
+    - 방식 : GET 
+    - URL : "/learning-categories"
+    - Return :
+        - status : String
+        - message : String
+        - data : List
+            - parent : Object
+                - id
+                - name
+            - children : List
+                - id
+                - name
+* 등록
+
+    - 방식 : POST 
+    - URL : "/learning-categories/new"
+    - Body : 
+        - name : String
+        - parentId : Long (if 최상위 -> 0, else -> parentId) 
+* 수정
+
+    - 방식 : PUT 
+    - URL : "/learning-categories/{id}"
+    - Body : 
+        - name : String
+* 삭제
+
+    - 방식 : DELETE 
+    - URL : "/learning-categories/{id}"
+
+
+### 15. Patient 어르신
+
+* 조회
+
+    - 방식 : GET 
+    - URL : "/patients"
+    - return :
+        - id : Long
+        - name : String
