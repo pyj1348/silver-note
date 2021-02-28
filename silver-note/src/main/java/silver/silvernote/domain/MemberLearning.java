@@ -33,15 +33,15 @@ public class MemberCenterLearning {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "center_learning_id")
-    private CenterLearning centerLearning;
+    private LearningSchedule learningSchedule;
 
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public MemberCenterLearning(LocalDate date, int progress, Member member, CenterLearning centerLearning) {
+    public MemberCenterLearning(LocalDate date, int progress, Member member, LearningSchedule learningSchedule) {
         this.date = date;
         this.progress = progress;
         this.member = member;
-        this.centerLearning = centerLearning;
+        this.learningSchedule = learningSchedule;
     }
 
     public void updateProgress(int progress){ this.progress = progress; }

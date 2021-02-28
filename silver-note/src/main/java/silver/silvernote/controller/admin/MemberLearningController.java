@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import silver.silvernote.domain.CenterLearning;
+import silver.silvernote.domain.LearningSchedule;
 import silver.silvernote.domain.MemberCenterLearning;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.domain.member.Member;
@@ -29,7 +29,7 @@ public class MemberCenterLearningController {
 
     private final MemberCenterLearningService memberCenterLearningService;
     private final MemberService memberService;
-    private final CenterLearningService centerLearningService;
+    private final LearningScheduleService learningScheduleService;
 
     /**
      * 조회
@@ -50,12 +50,12 @@ public class MemberCenterLearningController {
     @PostMapping("/member-center-learnings/new")
     public ResponseEntity<Message> saveMemberCenterLearning(@RequestBody @Valid MemberCenterLearningRequestDto request) {
         Member member = memberService.findOne(request.getMemberId()).orElseThrow(NoSuchElementException::new);
-        CenterLearning centerLearning = centerLearningService.findOne(request.getCenterLearningId()).orElseThrow(NoSuchElementException::new);
+        LearningSchedule learningSchedule = learningScheduleService.findOne(request.getCenterLearningId()).orElseThrow(NoSuchElementException::new);
 
         MemberCenterLearning memberCenterLearning = MemberCenterLearning.BuilderByParam()
                                                     .date(request.getDate())
                                                     .member(member)
-                                                    .centerLearning(centerLearning)
+                                                    .learningSchedule(learningSchedule)
                                                     .build();
 
         memberCenterLearningService.save(memberCenterLearning);
@@ -130,7 +130,7 @@ public class MemberCenterLearningController {
             this.id = memberCenterLearning.getId();
             this.date = memberCenterLearning.getDate();
             this.memberId = memberCenterLearning.getMember().getId();
-            this.centerLearningId = memberCenterLearning.getCenterLearning().getId();
+            this.centerLearningId = memberCenterLearning.getLearningSchedule().getId();
         }
     }
 

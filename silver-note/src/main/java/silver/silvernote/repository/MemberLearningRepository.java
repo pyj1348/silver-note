@@ -1,7 +1,6 @@
 package silver.silvernote.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import silver.silvernote.domain.CenterLearning;
 import silver.silvernote.domain.MemberCenterLearning;
 
 import java.time.LocalDate;
