@@ -8,6 +8,7 @@
 ## Services
 
 ### 1. Member 센터멤버
+[Member API로 이동] (./api/MemberAPI.md)
 
 센터에 소속된 멤버를 나타내는 엔티티
 
