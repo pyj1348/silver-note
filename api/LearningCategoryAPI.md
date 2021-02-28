@@ -1,4 +1,4 @@
-### Learning-Category 학습 카테고리
+### Learning - Category 학습 카테고리
 
 * 조회
 
