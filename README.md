@@ -18,7 +18,7 @@ Manger, Emplyee, Patient, Family extends Member
 
 
 ### 2. Center 센터
-[Center API로 이동](./api/Center.md)
+[Center API로 이동](./api/CenterAPI.md)
 
 요양원 센터를 나타내는 엔티티
 
