@@ -113,10 +113,7 @@ public class NotificationController {
     @Data
     static class NotificationRequestDto {
 
-        @NotNull(message = "날짜를 확인하세요")
-        private LocalDate date;
-
-        @NotBlank(message = "제목을 확인하세요")
+                @NotBlank(message = "제목을 확인하세요")
         private String title;
 
         @NotBlank(message = "내용를 확인하세요")
@@ -124,6 +121,9 @@ public class NotificationController {
 
         @NotNull
         private Long centerId;
+
+        @NotNull(message = "날짜를 확인하세요")
+        private LocalDate date;
 
     }
 
@@ -135,14 +135,14 @@ public class NotificationController {
     static class NotificationResponseDto {
         private Long id;
         private String title;
-        private LocalDate date;
         private String context;
+        private LocalDate date;
 
         public NotificationResponseDto(Notification notification) {
             this.id = notification.getId();
-            this.date = notification.getDate();
             this.title = notification.getTitle();
             this.context = notification.getContext();
+            this.date = notification.getDate();
         }
     }
 }

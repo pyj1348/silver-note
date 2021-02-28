@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.Address;
 import silver.silvernote.domain.Center;
-import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.domain.member.*;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
@@ -50,10 +49,10 @@ public class MemberController {
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
-    @GetMapping("/patients")
+    @GetMapping("/members/patients")
     public ResponseEntity<Message> findPatients(@RequestParam("centerId") Long centerId) {
 
-        List<PatientsResponseDto> patients = memberService.findPatientsByCenterId(centerId).stream().map(PatientsResponseDto::new).collect(Collectors.toList());;
+        List<SimpleMemberResponseDto> patients = memberService.findPatientsByCenterId(centerId).stream().map(SimpleMemberResponseDto::new).collect(Collectors.toList());;
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", patients), // STATUS, MESSAGE, DATA
@@ -125,7 +124,7 @@ public class MemberController {
      * */
     @GetMapping("/members/manager/waiting")
     public ResponseEntity<Message> findWaitingMembers(){
-        List<MembersResponseDto> collect = memberService.findWaitingManagers().stream().map(MembersResponseDto::new)
+        List<SimpleMemberResponseDto> collect = memberService.findWaitingManagers().stream().map(SimpleMemberResponseDto::new)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
@@ -279,13 +278,13 @@ public class MemberController {
     }
 
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class PatientsResponseDto {
+    static class SimpleMemberResponseDto {
         private Long id;
         private String name;
 
-        public PatientsResponseDto(Patient patient){
-            this.id = patient.getId();
-            this.name = patient.getName();
+        public SimpleMemberResponseDto(Member member){
+            this.id = member.getId();
+            this.name = member.getName();
         }
     }
 }
