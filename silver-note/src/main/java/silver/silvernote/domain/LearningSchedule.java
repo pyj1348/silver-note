@@ -8,15 +8,18 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CenterLearning {
+public class LearningSchedule {
 
     @Id
     @GeneratedValue
-    @Column(name = "center_learning_id")
+    @Column(name = "learning_schedule_id")
     private Long id;
 
     @NotNull
@@ -26,14 +29,12 @@ public class CenterLearning {
     @JoinColumn(name = "center_id")
     private Center center;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "learning_id")
-    private Learning learning;
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public CenterLearning(LocalDate date,Center center, Learning learning) {
+    public LearningSchedule(LocalDate date, Center center) {
         this.date = date;
         this.center = center;
-        this.learning = learning;
+
     }
+
 }

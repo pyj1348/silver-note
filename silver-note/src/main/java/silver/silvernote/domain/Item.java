@@ -27,7 +27,6 @@ public class Item {
     @NotBlank
     private String name;
 
-    @Size(min = 0)
     private int price;
 
     // 분류?

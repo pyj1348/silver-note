@@ -5,8 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import silver.silvernote.domain.DailyLearning;
 import silver.silvernote.domain.LearningSchedule;
-import silver.silvernote.domain.MemberCenterLearning;
+import silver.silvernote.domain.MemberLearning;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.domain.member.Member;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
@@ -16,8 +17,6 @@ import silver.silvernote.service.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,19 +24,19 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-public class MemberCenterLearningController {
+public class MemberLearningController {
 
-    private final MemberCenterLearningService memberCenterLearningService;
+    private final MemberLearningService memberLearningService;
     private final MemberService memberService;
-    private final LearningScheduleService learningScheduleService;
+    private final DailyLearningService dailyLearningService;
 
     /**
      * 조회
      * */
-    @GetMapping("/member-center-learnings")
-    public ResponseEntity<Message> findMemberCenterLearnings() {
+    @GetMapping("/member-learnings")
+    public ResponseEntity<Message> findMemberLearnings() {
 
-        List<MemberCenterLearningResponseDto> collect = memberCenterLearningService.findMemberCenterLearnings().stream().map(MemberCenterLearningResponseDto::new).collect(Collectors.toList());
+        List<MemberLearningResponseDto> collect = memberLearningService.findMemberLearnings().stream().map(MemberLearningResponseDto::new).collect(Collectors.toList());
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
@@ -47,21 +46,20 @@ public class MemberCenterLearningController {
     /**
      * 생성
      * */
-    @PostMapping("/member-center-learnings/new")
-    public ResponseEntity<Message> saveMemberCenterLearning(@RequestBody @Valid MemberCenterLearningRequestDto request) {
+    @PostMapping("/member-learnings/new")
+    public ResponseEntity<Message> saveMemberLearning(@RequestBody @Valid MemberLearningController.MemberLearningRequestDto request) {
         Member member = memberService.findOne(request.getMemberId()).orElseThrow(NoSuchElementException::new);
-        LearningSchedule learningSchedule = learningScheduleService.findOne(request.getCenterLearningId()).orElseThrow(NoSuchElementException::new);
+        DailyLearning learning = dailyLearningService.findOne(request.getDailyLearningId()).orElseThrow(NoSuchElementException::new);
 
-        MemberCenterLearning memberCenterLearning = MemberCenterLearning.BuilderByParam()
-                                                    .date(request.getDate())
+        MemberLearning memberLearning = MemberLearning.BuilderByParam()
                                                     .member(member)
-                                                    .learningSchedule(learningSchedule)
+                                                    .dailyLearning(learning)
                                                     .build();
 
-        memberCenterLearningService.save(memberCenterLearning);
+        memberLearningService.save(memberLearning);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(memberCenterLearning.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(memberLearning.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.CREATED);
     }
@@ -69,10 +67,10 @@ public class MemberCenterLearningController {
     /**
      * 수정
      * */
-    @PutMapping("/member-center-learnings/{id}")
+    @PutMapping("/member-learnings/{id}")
     public ResponseEntity<Message> updateProgress(@PathVariable("id") Long id, @RequestParam("progress") int progress) {
 
-        memberCenterLearningService.updateProgress(id, progress);
+        memberLearningService.updateProgress(id, progress);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -84,10 +82,10 @@ public class MemberCenterLearningController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/member-center-learnings/{id}")
-    public ResponseEntity<Message> deleteMemberCenterLearning(@PathVariable("id") Long id) {
+    @DeleteMapping("/member-learnings/{id}")
+    public ResponseEntity<Message> deleteMemberLearning(@PathVariable("id") Long id) {
 
-        memberCenterLearningService.deleteMemberCenterLearning(id);
+        memberLearningService.deleteMemberLearning(id);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -100,18 +98,15 @@ public class MemberCenterLearningController {
      * Request DTO
      * */
     @Data
-    static class MemberCenterLearningRequestDto {
-        @NotNull(message = "날짜를 확인하세요")
-        private LocalDate date;
+    static class MemberLearningRequestDto {
 
-        @Size(min = 0)
         private int progress;
 
         @NotNull(message = "멤버 ID를 확인하세요")
         private Long memberId;
 
         @NotNull(message = "센터학습 ID를 확인하세요")
-        private Long centerLearningId;
+        private Long dailyLearningId;
 
     }
 
@@ -120,17 +115,15 @@ public class MemberCenterLearningController {
      * Response DTO
      * */
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class MemberCenterLearningResponseDto {
+    static class MemberLearningResponseDto {
         private Long id;
-        private LocalDate date;
         private Long memberId;
-        private Long centerLearningId;
+        private Long dailyLearningId;
 
-        public MemberCenterLearningResponseDto(MemberCenterLearning memberCenterLearning) {
-            this.id = memberCenterLearning.getId();
-            this.date = memberCenterLearning.getDate();
-            this.memberId = memberCenterLearning.getMember().getId();
-            this.centerLearningId = memberCenterLearning.getLearningSchedule().getId();
+        public MemberLearningResponseDto(MemberLearning memberLearning) {
+            this.id = memberLearning.getId();
+            this.memberId = memberLearning.getMember().getId();
+            this.dailyLearningId = memberLearning.getDailyLearning().getId();
         }
     }
 

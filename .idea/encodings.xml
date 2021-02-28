@@ -3,6 +3,7 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="x-windows-949">
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/InitDB.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/SilverNoteApplication.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/aop/TimeTraceAop.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/controller/HomeController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/controller/MemberController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/controller/admin/CenterController.java" charset="UTF-8" />
@@ -10,12 +11,14 @@
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/controller/manager/ManagerMemberController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Album.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Center.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/CenterLearning.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/DailyLearning.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Exercise.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Item.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Learning.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/MemberCenterLearning.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/LearningCategory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/LearningSchedule.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/MemberExercise.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/MemberLearning.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/MemberStudy.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Menu.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/Notification.java" charset="UTF-8" />
@@ -33,13 +36,15 @@
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/member/Patient.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/domain/member/PermissionStatus.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/AlbumRepository.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/CenterLearningRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/CenterRepository.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/DailyLearningRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/ExerciseRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/ItemRepository.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/LearningCategoryRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/LearningRepository.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/MemberCenterLearningRepository.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/LearningScheduleRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/MemberExerciseRepository.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/MemberLearningRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/MenuRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/NotificationRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/repository/OrderRepository.java" charset="UTF-8" />
@@ -54,6 +59,7 @@
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/responsemessage/HttpHeaderCreator.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/responsemessage/HttpStatusEnum.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/responsemessage/Message.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/silver-note/src/main/java/silver/silvernote/service/LearningCategoryService.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/main/resources/static/css/style.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/silver-note/src/test/java/silver/silvernote/service/CenterMemberRepositoryTest.java" charset="UTF-8" />
     <file url="PROJECT" charset="x-windows-949" />

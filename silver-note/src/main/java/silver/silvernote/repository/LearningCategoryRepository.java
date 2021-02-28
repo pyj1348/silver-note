@@ -1,14 +1,13 @@
 package silver.silvernote.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import silver.silvernote.domain.CenterLearning;
-import silver.silvernote.domain.Learning;
+import silver.silvernote.domain.LearningCategory;
 
-import java.time.LocalDate;
-import java.util.Optional;
+import java.util.List;
 
-public interface CenterLearningRepository extends JpaRepository<CenterLearning, Long> {
 
-    Optional<CenterLearning> findByDate(LocalDate date);
+public interface LearningCategoryRepository extends JpaRepository<LearningCategory, Long> {
+
+    List<LearningCategory> findAllByParentId(Long parentId);
 
 }

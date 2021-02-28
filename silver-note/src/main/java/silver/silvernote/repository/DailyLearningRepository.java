@@ -1,20 +1,15 @@
 package silver.silvernote.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import silver.silvernote.domain.Center;
+import silver.silvernote.domain.DailyLearning;
 import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.LearningCategory;
+import silver.silvernote.domain.LearningSchedule;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface LearningRepository extends JpaRepository<Learning, Long> {
+public interface DailyLearningRepository extends JpaRepository<DailyLearning, Long> {
 
-    Optional<Learning> findByName(String name);
-
-    Optional<Learning> findByCategory(LearningCategory category);
-
-//    @Query(value = "select DISTINCT l from Learning l join fetch l.category")
-    List<Learning> findAllByCategory(LearningCategory category);
+    List<DailyLearning> findAllBySchedule(LearningSchedule schedule);
 }

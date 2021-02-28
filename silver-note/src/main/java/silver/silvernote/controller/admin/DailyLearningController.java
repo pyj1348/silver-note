@@ -1,4 +1,4 @@
-package silver.silvernote.controller;
+package silver.silvernote.controller.admin;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -72,31 +72,21 @@ public class DailyLearningController {
     /**
      * 수정
      * */
-//    @PutMapping("/daily-learnings/{id}")
-//    public ResponseEntity<Message> updateLearning(@PathVariable("id") Long id, @RequestBody DailyLearningRequestDto request) {
-//
-//        learningService.updateData(id, request.getName(), request.getUrl(), request.getDescription());
-//
-//        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-//                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
-//                HttpHeaderCreator.createHttpHeader(),
-//                HttpStatus.OK);
-//    }
-//
-//    /**
-//     * 삭제
-//     * */
-//    @DeleteMapping("/daily-learnings/{id}")
-//    public ResponseEntity<Message> deleteLearning(@PathVariable("id") Long id) {
-//
-//        learningService.deleteLearning(id);
-//
-//        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-//                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
-//                HttpHeaderCreator.createHttpHeader(),
-//                HttpStatus.OK);
-//    }
-//
+
+    /**
+     * 삭제
+     * */
+    @DeleteMapping("/daily-learnings/{id}")
+    public ResponseEntity<Message> deleteDailyLearning(@PathVariable("id") Long id) {
+
+        dailyLearningService.deleteDailyLearning(id);
+
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
+
 
     /**
      * Request DTO

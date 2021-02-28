@@ -4,9 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.Album;
-import silver.silvernote.domain.Schedule;
-import silver.silvernote.repository.AlbumRepository;
-import silver.silvernote.repository.ScheduleRepository;
+import silver.silvernote.domain.LearningCategory;
+import silver.silvernote.repository.LearningCategoryRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -15,46 +14,50 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class AlbumService {
-    private final AlbumRepository albumRepository;
+public class LearningCategoryService {
+    private final LearningCategoryRepository learningCategoryRepository;
     /**
-     * 앨범 등록
+     * 카테고리 등록
      */
     @Transactional
-    public Long save(Album album) {
-        albumRepository.save(album);
-        return album.getId();
+    public Long save(LearningCategory category) {
+        learningCategoryRepository.save(category);
+        return category.getId();
     }
 
     /**
-     * 정보 변경
+     * 카테고리 삭제
      */
     @Transactional
-    public void updateData(Long id, String title, String context){
-        Album album = albumRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        album.updateData(title, context);
-        albumRepository.save(album);
+    public void deleteCategory(Long id){
+        learningCategoryRepository.deleteById(id);
     }
 
     /**
-     * 앨범 삭제
+     * 전체 카테고리 조회
      */
-    @Transactional
-    public void deleteAlbum(Long id){
-        albumRepository.deleteById(id);
+    public List<LearningCategory> findCategories() {
+        return learningCategoryRepository.findAll();
     }
 
     /**
-     * 전체 앨범 조회
+     * 최상위 카테고리 조회
      */
-    public List<Album> findAlbums() {
-        return albumRepository.findAll();
+    public List<LearningCategory> findMainCategories() {
+        return learningCategoryRepository.findAllByParentId(null);
+    }
+
+    /**
+     * 하위 카테고리 조회
+     */
+    public List<LearningCategory> findSubCategories(Long parentId) {
+        return learningCategoryRepository.findAllByParentId(parentId);
     }
 
     /**
      * 개별 일정 조회
      */
-    public Optional<Album> findOne(Long albumId) {
-        return albumRepository.findById(albumId);
+    public Optional<LearningCategory> findOne(Long categoryId) {
+        return learningCategoryRepository.findById(categoryId);
     }
 }

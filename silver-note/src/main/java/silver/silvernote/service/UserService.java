@@ -15,7 +15,6 @@ import java.util.Optional;
 // 생성자주입 때 lombok을 쓸 거면 @AllArgsConstructor | @RequiredArgsConstructor(final 요소만)를 사용
 public class UserService {
     private final UserRepository userRepository;
-    private final MemberService memberService;
 
     /**
      * 유저 등록

@@ -1,15 +1,16 @@
 package silver.silvernote.service;
 
-import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Item;
+import silver.silvernote.domain.DailyLearning;
 import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.LearningCategory;
-import silver.silvernote.repository.ItemRepository;
+import silver.silvernote.domain.LearningSchedule;
+import silver.silvernote.repository.DailyLearningRepository;
 import silver.silvernote.repository.LearningCategoryRepository;
 import silver.silvernote.repository.LearningRepository;
+import silver.silvernote.repository.LearningScheduleRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,17 +18,15 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional // (readOnly = true) // 조회만 하는 서비스에선 readOnly = true 사용 권장, 성능이 좋다
-// 생성자주입 때 lombok을 쓸 거면 @AllArgsConstructor | @RequiredArgsConstructor(final 요소만)를 사용
-public class LearningService {
-    private final LearningRepository learningRepository;
-    private final LearningCategoryRepository categoryRepository;
+@Transactional
+public class DailyLearningService {
+    private final DailyLearningRepository dailyLearningRepository;
     /**
      * 학습 등록
      */
     @Transactional
-    public Long save(Learning learning) {
-        learningRepository.save(learning);
+    public Long save(DailyLearning learning) {
+        dailyLearningRepository.save(learning);
         return learning.getId();
 
     }
@@ -35,48 +34,33 @@ public class LearningService {
     /**
      * 정보 변경
      */
-    @Transactional
-    public void updateData(Long id, String name, String url, String description){
-        Learning learning = learningRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        learning.updateData(name, url, description);
-        learningRepository.save(learning);
-    }
-
 
     /**
      * 학습 삭제
      */
 
     @Transactional
-    public void deleteLearning(Long id){
-        learningRepository.deleteById(id);
+    public void deleteDailyLearning(Long id){
+        dailyLearningRepository.deleteById(id);
     }
 
     /**
      * 전체 학습 조회
      */
-    public List<Learning> findLearnings() {
-        return learningRepository.findAll();
+    public List<DailyLearning> findLearnings() {
+        return dailyLearningRepository.findAll();
     }
 
-    public List<Learning> findLearningsByCategory(LearningCategory category){
-
-        return learningRepository.findAllByCategory(category);
+    public List<DailyLearning> findLearningsBySchedule(LearningSchedule schedule) {
+        return dailyLearningRepository.findAllBySchedule(schedule);
     }
 
 
     /**
      * 개별 학습 조회
      */
-    public Optional<Learning> findOne(Long learningId) {
-        return learningRepository.findById(learningId);
+    public Optional<DailyLearning> findOne(Long learningId) {
+        return dailyLearningRepository.findById(learningId);
     }
-    public Optional<Learning> findOneByCategoryId(Long categoryId) {
-
-        LearningCategory category = categoryRepository.findById(categoryId).orElseThrow(NoSuchElementException::new);
-
-        return learningRepository.findByCategory(category);
-    }
-
 
 }

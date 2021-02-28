@@ -3,7 +3,6 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.MemberCenterLearning;
 import silver.silvernote.domain.MemberExercise;
 import silver.silvernote.repository.MemberExerciseRepository;
 

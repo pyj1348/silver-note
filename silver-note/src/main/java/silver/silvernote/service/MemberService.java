@@ -77,6 +77,10 @@ public class MemberService {
         memberRepository.deleteById(id);
     }
 
+    /**
+     * 센터별 전체 회원 조회
+     */
+    public List<Patient> findPatientsByCenterId(Long centerId) { return patientRepository.findAllByCenterId(centerId);}
 
     /**
      * 역할별 전체 회원 조회

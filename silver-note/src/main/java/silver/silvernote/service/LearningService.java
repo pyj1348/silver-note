@@ -1,11 +1,14 @@
 package silver.silvernote.service;
 
+import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.Item;
 import silver.silvernote.domain.Learning;
+import silver.silvernote.domain.LearningCategory;
 import silver.silvernote.repository.ItemRepository;
+import silver.silvernote.repository.LearningCategoryRepository;
 import silver.silvernote.repository.LearningRepository;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.Optional;
 // 생성자주입 때 lombok을 쓸 거면 @AllArgsConstructor | @RequiredArgsConstructor(final 요소만)를 사용
 public class LearningService {
     private final LearningRepository learningRepository;
+    private final LearningCategoryRepository categoryRepository;
     /**
      * 학습 등록
      */
@@ -55,12 +59,23 @@ public class LearningService {
         return learningRepository.findAll();
     }
 
+    public List<Learning> findLearningsByCategory(LearningCategory category){
+
+        return learningRepository.findAllByCategory(category);
+    }
+
 
     /**
      * 개별 학습 조회
      */
     public Optional<Learning> findOne(Long learningId) {
         return learningRepository.findById(learningId);
+    }
+    public Optional<Learning> findOneByCategoryId(Long categoryId) {
+
+        LearningCategory category = categoryRepository.findById(categoryId).orElseThrow(NoSuchElementException::new);
+
+        return learningRepository.findByCategory(category);
     }
 
 

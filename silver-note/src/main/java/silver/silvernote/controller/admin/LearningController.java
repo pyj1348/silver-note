@@ -6,16 +6,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.Learning;
+import silver.silvernote.domain.LearningCategory;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.Message;
 import silver.silvernote.responsemessage.HttpStatusEnum;
+import silver.silvernote.service.LearningCategoryService;
 import silver.silvernote.service.LearningService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -23,29 +26,36 @@ import java.util.stream.Collectors;
 public class LearningController {
 
     private final LearningService learningService;
+    private final LearningCategoryService categoryService;
 
     /**
      * 조회
      * */
-    @GetMapping("/learnings")
-    public ResponseEntity<Message> findLearnings() {
 
-        List<LearningResponseDto> collect = learningService.findLearnings().stream().map(LearningResponseDto::new).collect(Collectors.toList());
+    @GetMapping("/learnings")
+    public ResponseEntity<Message> findLearningsByCategory(@RequestParam ("categoryId") Long categoryId) {
+        LearningCategory category = categoryService.findOne(categoryId).orElseThrow(NoSuchElementException::new);
+
+        List<LearningResponseDto> collect = learningService.findLearningsByCategory(category).stream().map(LearningResponseDto::new).collect(Collectors.toList());
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
 
+
     /**
      * 생성
      * */
     @PostMapping("/learnings/new")
     public ResponseEntity<Message> saveLearning(@RequestBody @Valid LearningRequestDto request) {
+        LearningCategory category = categoryService.findOne(request.getCategoryId()).orElseThrow(NoSuchElementException::new);
+
         Learning learning = Learning.BuilderByParam()
                     .name(request.getName())
                     .description(request.getDescription())
                     .url(request.getUrl())
+                    .category(category)
                     .build();
 
         learningService.save(learning);
@@ -94,6 +104,7 @@ public class LearningController {
         private String name;
         private String description;
         private String url;
+        private Long categoryId;
 
     }
 

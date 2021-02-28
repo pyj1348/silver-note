@@ -95,7 +95,6 @@ public class ItemController {
         @NotBlank (message = "이름을 확인하세요")
         private String name;
 
-        @Size(min = 0)
         private int price;
 
     }

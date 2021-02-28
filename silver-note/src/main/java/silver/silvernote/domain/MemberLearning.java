@@ -7,24 +7,17 @@ import lombok.NoArgsConstructor;
 import silver.silvernote.domain.member.Member;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberCenterLearning {
+public class MemberLearning {
 
     @Id
     @GeneratedValue
-    @Column(name = "member_exercise_id")
+    @Column(name = "member_learning_id")
     private Long id;
 
-    @NotNull
-    private LocalDate date;
-
-    @Size(min = 0)
     private int progress;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,16 +25,15 @@ public class MemberCenterLearning {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "center_learning_id")
-    private LearningSchedule learningSchedule;
+    @JoinColumn(name = "learning_schedule_id")
+    private DailyLearning dailyLearning;
 
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public MemberCenterLearning(LocalDate date, int progress, Member member, LearningSchedule learningSchedule) {
-        this.date = date;
+    public MemberLearning(int progress, Member member, DailyLearning dailyLearning) {
         this.progress = progress;
         this.member = member;
-        this.learningSchedule = learningSchedule;
+        this.dailyLearning = dailyLearning;
     }
 
     public void updateProgress(int progress){ this.progress = progress; }
