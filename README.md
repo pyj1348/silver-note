@@ -7,436 +7,75 @@
 
 ## Services
 
-### 1. Member 멤버
+### 1. Member 센터멤버
 
-* 조회
+센터에 소속된 멤버를 나타내는 엔티티
 
-    - 방식 : GET 
-    - URL : "/members"
+Manger, Emplyee, Patient, Family는 Memeber를 상속한다
 
-* 등록
-
-    - 방식 : POST 
-    - URL : "/members/new"
-    - Body : 
-        - name : String
-        - sex : String
-        - rrn : String
-        - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
-        - centerId : Long
-        
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/members/{id}"
-    - Body : 
-        - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/members/{id}"
-    
-    
-* 승인 대기 관리자 조회
-
-    - 방식 : GET 
-    - URL : "/members/manager/waiting"
-
-    
-* 승인 대기 관리자 처리 요청
-
-    - 방식 : PUT
-    - URL : "/members/manager/{id}/approval?type=?"
-    - Param : 
-        - type : "approve" | "decline" 
+Manger, Emplyee, Patient, Family extends Member
 
 
 ### 2. Center 센터
 
-* 조회
-
-    - 방식 : GET 
-    - URL : "/centers"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/centers/new"
-    - Body : 
-        - name : String
-        - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
-        - description : String
-        
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/centers/{id}"
-    - Body : 
-        - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
-        - description : String
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/centers/{id}"
+요양원 센터를 나타내는 엔티티
 
 
 ### 3. Notification 공지
 
-* 조회
+각 센터에서 게시하는 공지 엔티티
 
-    - 방식 : GET 
-    - URL : "/notifications"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/notifications/new"
-    - Body : 
-        - title : String
-        - context : String
-        - centerId : Long
-        - date : Date
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/notifications/{id}"
-    - Body : 
-        - title : String
-        - context : String
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/notifications/{id}"
-    
 
 ### 4. Album 앨범
 
-* 조회
-
-    - 방식 : GET 
-    - URL : "/albums"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/albums/new"
-    - Body : 
-        - title : String
-        - context : String
-        - date : Date
-        - memberId : Long
-        - centerId : Long
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/albums/{id}"
-    - Body : 
-        - title : String
-        - context : String
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/albums/{id}"
+각 센터에서 게시하는 앨범 엔티티
     
 
 ### 5. Menu 식단
 
-* 조회
+각 센터에서 게시하는 식단 엔티티
 
-    - 방식 : GET 
-    - URL : "/menus"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/menus/new"
-    - Body : 
-        - meal : String
-        - date : Date
-        - centerId : Long
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/menus/{id}"
-    - Body : 
-        - meal : String
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/menus/{id}"
 
 ### 6. Schedule 일정
 
-* 조회
+각 센터에서 게시하는 일정 엔티티
 
-    - 방식 : GET 
-    - URL : "/schedules"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/schedules/new"
-    - Body : 
-        - context : String
-        - date : Date
-        - centerId : Long
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/schedules/{id}"
-    - Body : 
-        - context : String
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/schedules/{id}"
 
 ### 7. Item 상품
 
-* 조회
+통합관리자가 등록하고 센터관리자가 주문할 수 있는 상품 엔티티
 
-    - 방식 : GET 
-    - URL : "/items"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/items/new"
-    - Body : 
-        - name : String
-        - price : int
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/items/{id}"
-    - Body : 
-        - name : String
-        - price : int
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/items/{id}"
 
 ### 8. Order 구매
 
-* 조회
+센터관리자가 상품을 주문한 내역을 나타내는 엔티티
 
-    - 방식 : GET 
-    - URL : "/orders"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/orders/new"
-    - Body : 
-        - date : Date
-        - quantity : int
-        - memberId : Long
-        - centerId : Long
-        
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/orders/{id}"
 
 ### 9. Exercise 운동
 
-* 조회
+통합관리자가 등록하는 운동 엔티티
 
-    - 방식 : GET 
-    - URL : "/exercises"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/exercises/new"
-    - Body : 
-        - name : String
-        - decription : String
-        - url : String
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/exercises/{id}"
-    - Body : 
-        - name : String
-        - decription : String
-        - url : String
-
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/exercises/{id}"
 
 ### 10. Member - Exercise 운동내역
 
-* 조회
+센터멤버가 운동을 수행한 내역을 나타내는 엔티티
 
-    - 방식 : GET 
-    - URL : "/member-exercises"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/member-exercises/new"
-    - Body : 
-        - progress : int
-        - date : Date
-        - memberId : Long
-        - exerciseId : Long
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/member-exercises/{id}"
-    - Body : 
-        - progress : int
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/member-exercises/{id}"
 
 ### 11. Learning 학습
 
-* 조회
-
-    - 방식 : GET 
-    - URL : "/learnings"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/learnings/new"
-    - Body : 
-        - name : String
-        - decription : String
-        - url : String
-
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/learnings/{id}"
-    - Body : 
-        - name : String
-        - decription : String
-        - url : String
-
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/learnings/{id}"
-
-### 12. Center - Learning 센터별 학습
-
-* 조회
-
-    - 방식 : GET 
-    - URL : "/center-learnings"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/center-learnings/new"
-    - Body : 
-        - centerId : Long
-        - data : Map<Date, Array of Long> // date : 일자, Array : learningIDs
-
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/center-learnings/{id}"
-
-### 13. Member - Center - Learning 센터별학습 수강내역
-
-* 조회
-
-    - 방식 : GET 
-    - URL : "/member-center-learnings"
-
-* 등록
-
-    - 방식 : POST 
-    - URL : "/member-center-learnings/new"
-    - Body : 
-        - progress : int
-        - date : Date
-        - memberId : Long
-        - centerLearningId : Long
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/member-center-learnings/{id}"
-    - Body : 
-        - progress : int
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/member-center-learnings/{id}"
-
-### 14. Learning-Category 학습 카테고리
-
-* 조회
-
-    - 방식 : GET 
-    - URL : "/learning-categories"
-    - Return :
-        - status : String
-        - message : String
-        - data : List
-            - parent : Object
-                - id
-                - name
-            - children : List
-                - id
-                - name
-* 등록
-
-    - 방식 : POST 
-    - URL : "/learning-categories/new"
-    - Body : 
-        - name : String
-        - parentId : Long (if 최상위 -> 0, else -> parentId) 
-* 수정
-
-    - 방식 : PUT 
-    - URL : "/learning-categories/{id}"
-    - Body : 
-        - name : String
-* 삭제
-
-    - 방식 : DELETE 
-    - URL : "/learning-categories/{id}"
+통합관리자가 등록하는 학습 엔티티
 
 
-### 15. Patient 어르신
+### 12. Learning - Category 학습 카테고리
 
-* 조회
+학습을 분류하는 카테고리 엔티티
 
-    - 방식 : GET 
-    - URL : "/patients"
-    - return :
-        - id : Long
-        - name : String
+
+### 13. Learning - Schedule 센터별 학습일정
+
+센터관리자가 등록된 학습을 일정으로 관리하는 엔티티
+
+
+### 14. Daily - Learning 일자별 학습목록
+
+학습일정 안에 등록된 개별 학습목록
