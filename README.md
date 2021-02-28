@@ -18,65 +18,78 @@ Manger, Emplyee, Patient, Family extends Member
 
 
 ### 2. Center 센터
+[Center API로 이동](./api/Center.md)
 
 요양원 센터를 나타내는 엔티티
 
 
 ### 3. Notification 공지
+[Notification API로 이동](./api/NotificationAPI.md)
 
 각 센터에서 게시하는 공지 엔티티
 
 
 ### 4. Album 앨범
+[Album API로 이동](./api/AlbumAPI.md)
 
 각 센터에서 게시하는 앨범 엔티티
     
 
 ### 5. Menu 식단
+[Menu API로 이동](./api/MenuAPI.md)
 
 각 센터에서 게시하는 식단 엔티티
 
 
 ### 6. Schedule 일정
+[Schedule API로 이동](./api/ScheduleAPI.md)
 
 각 센터에서 게시하는 일정 엔티티
 
 
 ### 7. Item 상품
+[Item API로 이동](./api/ItemAPI.md)
 
 통합관리자가 등록하고 센터관리자가 주문할 수 있는 상품 엔티티
 
 
 ### 8. Order 구매
+[Order API로 이동](./api/OrderAPI.md)
 
 센터관리자가 상품을 주문한 내역을 나타내는 엔티티
 
 
 ### 9. Exercise 운동
+[Exercise API로 이동](./api/ExerciseAPI.md)
 
 통합관리자가 등록하는 운동 엔티티
 
 
 ### 10. Member - Exercise 운동내역
+[MemberExercise API로 이동](./api/MemberExerciseAPI.md)
 
 센터멤버가 운동을 수행한 내역을 나타내는 엔티티
 
 
 ### 11. Learning 학습
+[Learning API로 이동](./api/LearningAPI.md)
 
 통합관리자가 등록하는 학습 엔티티
 
 
 ### 12. Learning - Category 학습 카테고리
+[LearningCategory API로 이동](./api/LearningCategoryAPI.md)
 
 학습을 분류하는 카테고리 엔티티
 
 
 ### 13. Learning - Schedule 센터별 학습일정
+[LearningSchedule API로 이동](./api/LearningScheduleAPI.md)
 
 센터관리자가 등록된 학습을 일정으로 관리하는 엔티티
 
 
 ### 14. Daily - Learning 일자별 학습목록
+[DailyLearning API로 이동](./api/DailyLearningAPI.md)
 
 학습일정 안에 등록된 개별 학습목록
