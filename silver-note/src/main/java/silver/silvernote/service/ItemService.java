@@ -3,9 +3,7 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Center;
 import silver.silvernote.domain.Item;
-import silver.silvernote.repository.CenterRepository;
 import silver.silvernote.repository.ItemRepository;
 
 import java.util.List;

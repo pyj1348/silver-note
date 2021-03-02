@@ -5,11 +5,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static javax.persistence.FetchType.LAZY;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
@@ -22,15 +21,11 @@ public class LearningCategory {
 
     private String name;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "parent_id")
-    private LearningCategory parent;
-
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public LearningCategory(String name, LearningCategory parent) {
+    public LearningCategory(String name) {
         this.name = name;
-        this.parent = parent;
     }
 
+    public void updateName(String name){ this.name = name; }
 }

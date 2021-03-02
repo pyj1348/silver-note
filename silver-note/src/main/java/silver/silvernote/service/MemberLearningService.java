@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.MemberLearning;
 import silver.silvernote.repository.MemberLearningRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;

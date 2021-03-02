@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.DailyLearning;
 import silver.silvernote.domain.Learning;
-import silver.silvernote.domain.LearningCategory;
 import silver.silvernote.domain.LearningSchedule;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
@@ -20,6 +19,7 @@ import silver.silvernote.service.LearningService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -53,18 +53,25 @@ public class DailyLearningController {
     @PostMapping("/daily-learnings/new")
     public ResponseEntity<Message> saveDailyLearning(@RequestBody @Valid DailyLearningRequestDto request) {
 
-        LearningSchedule schedule = scheduleService.findOne(request.getScheduleId()).orElseThrow(NoSuchElementException::new);
-        Learning learning = learningService.findOne(request.getLearningId()).orElseThrow(NoSuchElementException::new);
+        List<Long> createdIds = new ArrayList<>();
 
-        DailyLearning dailyLearning = DailyLearning.BuilderByParam()
+        LearningSchedule schedule = scheduleService.findOne(request.getScheduleId()).orElseThrow(NoSuchElementException::new);
+
+        for(Long learningId : request.getLearningIds()) {
+            Learning learning = learningService.findOne(learningId).orElseThrow(NoSuchElementException::new);
+
+            DailyLearning dailyLearning = DailyLearning.BuilderByParam()
                     .schedule(schedule)
                     .learning(learning)
                     .build();
 
-        dailyLearningService.save(dailyLearning);
+            dailyLearningService.save(dailyLearning);
+
+            createdIds.add(dailyLearning.getId());
+        }
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(dailyLearning.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new DailyLearningCreateResponseDto(schedule.getId(), createdIds)), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.CREATED);
     }
@@ -97,7 +104,7 @@ public class DailyLearningController {
         private Long scheduleId;
 
         @NotNull(message = "학습 ID를 확인하세요")
-        private Long learningId;
+        private List<Long> learningIds;
 
     }
 
@@ -118,4 +125,17 @@ public class DailyLearningController {
             this.learningId = learning.getLearning().getId();
         }
     }
+
+    @Data // JSON 요청의 응답으로 보낼 데이터 클래스
+    static class DailyLearningCreateResponseDto {
+        private Long scheduleId;
+        private List<Long> dailyLearningIds;
+
+        public DailyLearningCreateResponseDto(Long scheduleId, List<Long> dailyLearningIds) {
+            this.scheduleId = scheduleId;
+            this.dailyLearningIds = dailyLearningIds;
+        }
+    }
+
+
 }

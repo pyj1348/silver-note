@@ -1,8 +1,6 @@
 package silver.silvernote.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import silver.silvernote.domain.Center;
 import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.LearningCategory;
 

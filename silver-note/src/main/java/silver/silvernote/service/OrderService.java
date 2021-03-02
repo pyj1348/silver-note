@@ -3,14 +3,11 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Item;
 import silver.silvernote.domain.Order;
 import silver.silvernote.domain.member.Member;
-import silver.silvernote.repository.ItemRepository;
 import silver.silvernote.repository.OrderRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service

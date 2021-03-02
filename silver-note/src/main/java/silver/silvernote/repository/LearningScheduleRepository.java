@@ -12,7 +12,10 @@ public interface LearningScheduleRepository extends JpaRepository<LearningSchedu
 
     Optional<LearningSchedule> findByDate(LocalDate date);
 
+    Optional<LearningSchedule> findByDateAndCenter(LocalDate date, Center center);
+
     List<LearningSchedule> findAllByCenter(Center center);
     List<LearningSchedule> findAllByCenterAndDateBetweenOrderByDate(Center center, LocalDate start, LocalDate end);
+
 
 }

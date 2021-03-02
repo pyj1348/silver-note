@@ -3,7 +3,6 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Album;
 import silver.silvernote.domain.LearningCategory;
 import silver.silvernote.repository.LearningCategoryRepository;
 
@@ -25,6 +24,17 @@ public class LearningCategoryService {
         return category.getId();
     }
 
+    @Transactional
+    public void updateName(Long id, String name){
+        LearningCategory category = learningCategoryRepository.findById(id).orElseThrow(NoSuchElementException::new);
+
+        category.updateName(name);
+
+        learningCategoryRepository.save(category);
+    }
+
+
+
     /**
      * 카테고리 삭제
      */
@@ -38,20 +48,6 @@ public class LearningCategoryService {
      */
     public List<LearningCategory> findCategories() {
         return learningCategoryRepository.findAll();
-    }
-
-    /**
-     * 최상위 카테고리 조회
-     */
-    public List<LearningCategory> findMainCategories() {
-        return learningCategoryRepository.findAllByParentId(null);
-    }
-
-    /**
-     * 하위 카테고리 조회
-     */
-    public List<LearningCategory> findSubCategories(Long parentId) {
-        return learningCategoryRepository.findAllByParentId(parentId);
     }
 
     /**

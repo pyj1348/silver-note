@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.Exercise;
-import silver.silvernote.domain.Learning;
 import silver.silvernote.repository.ExerciseRepository;
-import silver.silvernote.repository.LearningRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;

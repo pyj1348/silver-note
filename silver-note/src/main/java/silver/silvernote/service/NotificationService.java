@@ -3,9 +3,7 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Album;
 import silver.silvernote.domain.Notification;
-import silver.silvernote.repository.AlbumRepository;
 import silver.silvernote.repository.NotificationRepository;
 
 import java.util.List;

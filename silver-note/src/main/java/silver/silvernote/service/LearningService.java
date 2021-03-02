@@ -1,13 +1,10 @@
 package silver.silvernote.service;
 
-import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Item;
 import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.LearningCategory;
-import silver.silvernote.repository.ItemRepository;
 import silver.silvernote.repository.LearningCategoryRepository;
 import silver.silvernote.repository.LearningRepository;
 

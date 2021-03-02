@@ -7,7 +7,9 @@ import silver.silvernote.domain.Address;
 import silver.silvernote.domain.Center;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Getter

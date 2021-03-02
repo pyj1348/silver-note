@@ -10,13 +10,15 @@ import silver.silvernote.domain.Center;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.domain.member.*;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
-import silver.silvernote.responsemessage.Message;
 import silver.silvernote.responsemessage.HttpStatusEnum;
+import silver.silvernote.responsemessage.Message;
 import silver.silvernote.service.CenterService;
 import silver.silvernote.service.MemberService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -150,7 +152,7 @@ public class MemberController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        Member member = memberService.findOne(id).orElseThrow(NoSuchElementException::new);;
+        Member member = memberService.findOne(id).orElseThrow(NoSuchElementException::new);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(member.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA

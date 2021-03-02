@@ -1,8 +1,6 @@
 package silver.silvernote.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import silver.silvernote.domain.Item;
-import silver.silvernote.domain.Menu;
 import silver.silvernote.domain.Schedule;
 
 import java.time.LocalDate;

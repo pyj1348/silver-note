@@ -14,11 +14,8 @@ import silver.silvernote.service.LearningCategoryService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,19 +30,11 @@ public class LearningCategoryController {
     @GetMapping("/learning-categories")
     public ResponseEntity<Message> findLearningCategories() {
 
-       List<CategoryDto> parents = learningCategoryService.findMainCategories().stream().map(CategoryDto::new).collect(Collectors.toList());
-
-       List<LearningCategoryResponseDto> categories = new ArrayList<>();
-
-       for(CategoryDto parent : parents){
-           List<CategoryDto> children = learningCategoryService.findSubCategories(parent.getId())
-                   .stream().map(CategoryDto::new).collect(Collectors.toList());
-
-           categories.add(new LearningCategoryResponseDto(parent, children));
-       }
+       List<LearningCategoryResponseDto> collect =
+               learningCategoryService.findCategories().stream().map(LearningCategoryResponseDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", categories), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
@@ -55,22 +44,11 @@ public class LearningCategoryController {
      * */
     @PostMapping("/learning-categories/new")
     public ResponseEntity<Message> saveLearningCategory(@RequestBody @Valid LearningCategoryRequestDto request) {
-        LearningCategory category;
-        if (request.getParentId() == 0){
-            category = LearningCategory.BuilderByParam()
+
+        LearningCategory category = LearningCategory.BuilderByParam()
                     .name(request.getName())
-                    .parent(null)
                     .build();
 
-        }
-        else{
-            LearningCategory parent = learningCategoryService.findOne(request.getParentId()).orElseThrow(NoSuchElementException::new);
-
-            category = LearningCategory.BuilderByParam()
-                    .name(request.getName())
-                    .parent(parent)
-                    .build();
-        }
         learningCategoryService.save(category);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
@@ -82,6 +60,18 @@ public class LearningCategoryController {
     /**
      * 수정
      * */
+
+    @PutMapping("/learning-categories/{id}")
+    public ResponseEntity<Message> updateCenter(@PathVariable("id") Long id,
+                                                @RequestBody @Valid LearningCategoryRequestDto request) {
+
+        learningCategoryService.updateName(id, request.getName());
+
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
 
 
     /**
@@ -108,9 +98,6 @@ public class LearningCategoryController {
         @NotBlank(message = "이름을 확인하세요")
         private String name;
 
-        @NotNull
-        private Long parentId;
-
     }
 
 
@@ -118,25 +105,15 @@ public class LearningCategoryController {
      * Response DTO
      * */
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class CategoryDto {
+    static class LearningCategoryResponseDto {
         private Long id;
         private String name;
 
-        public CategoryDto(LearningCategory category) {
+        public LearningCategoryResponseDto(LearningCategory category) {
             this.id = category.getId();
             this.name = category.getName();
         }
     }
 
-    @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class LearningCategoryResponseDto {
-        private CategoryDto parent;
-        private List<CategoryDto> children = new ArrayList<>();
-
-        public LearningCategoryResponseDto(CategoryDto parent, List<CategoryDto> children) {
-            this.parent = parent;
-            this.children = children;
-        }
-    }
 
 }

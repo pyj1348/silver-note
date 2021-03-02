@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.Address;
 import silver.silvernote.domain.Center;
-import silver.silvernote.domain.member.*;
-import silver.silvernote.repository.*;
+import silver.silvernote.repository.CenterRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;

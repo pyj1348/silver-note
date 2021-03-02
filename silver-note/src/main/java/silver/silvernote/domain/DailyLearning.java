@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -34,5 +33,5 @@ public class DailyLearning {
         this.learning = learning;
     }
 
-    public void updateSchdule(LearningSchedule schedule){ this.schedule = schedule; }
+    public void updateLearning(Learning learning){ this.learning = learning; }
 }

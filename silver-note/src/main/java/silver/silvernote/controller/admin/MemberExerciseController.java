@@ -12,7 +12,9 @@ import silver.silvernote.domain.member.Member;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.HttpStatusEnum;
 import silver.silvernote.responsemessage.Message;
-import silver.silvernote.service.*;
+import silver.silvernote.service.ExerciseService;
+import silver.silvernote.service.MemberExerciseService;
+import silver.silvernote.service.MemberService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

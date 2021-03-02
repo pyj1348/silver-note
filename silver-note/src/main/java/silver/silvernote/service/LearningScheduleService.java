@@ -66,5 +66,9 @@ public class LearningScheduleService {
         return learningScheduleRepository.findByDate(date);
     }
 
+    public Optional<LearningSchedule> findOneByDateAndCenter(LocalDate date, Center center) {
+        return learningScheduleRepository.findByDateAndCenter(date, center);
+    }
+
 
 }

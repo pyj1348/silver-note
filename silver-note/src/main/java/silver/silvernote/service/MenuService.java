@@ -3,10 +3,9 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import silver.silvernote.domain.Meal;
 import silver.silvernote.domain.Menu;
-import silver.silvernote.domain.Schedule;
 import silver.silvernote.repository.MenuRepository;
-import silver.silvernote.repository.ScheduleRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,7 +30,7 @@ public class MenuService {
      * 정보 변경
      */
     @Transactional
-    public void updateMeal(Long id, String meal){
+    public void updateMeal(Long id, Meal meal){
         Menu menu = menuRepository.findById(id).orElseThrow(NoSuchElementException::new);
         menu.updateMeal(meal);
         menuRepository.save(menu);

@@ -8,15 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.Exercise;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
-import silver.silvernote.responsemessage.Message;
 import silver.silvernote.responsemessage.HttpStatusEnum;
+import silver.silvernote.responsemessage.Message;
 import silver.silvernote.service.ExerciseService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController

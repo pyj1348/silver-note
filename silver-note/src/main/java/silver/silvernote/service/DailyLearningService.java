@@ -4,13 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.DailyLearning;
+import silver.silvernote.domain.Exercise;
 import silver.silvernote.domain.Learning;
-import silver.silvernote.domain.LearningCategory;
 import silver.silvernote.domain.LearningSchedule;
 import silver.silvernote.repository.DailyLearningRepository;
-import silver.silvernote.repository.LearningCategoryRepository;
-import silver.silvernote.repository.LearningRepository;
-import silver.silvernote.repository.LearningScheduleRepository;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -34,6 +31,13 @@ public class DailyLearningService {
     /**
      * 정보 변경
      */
+    @Transactional
+    public void updateLearning(Long id, Learning learning){
+        DailyLearning dailyLearning = dailyLearningRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        dailyLearning.updateLearning(learning);
+        dailyLearningRepository.save(dailyLearning);
+    }
+
 
     /**
      * 학습 삭제

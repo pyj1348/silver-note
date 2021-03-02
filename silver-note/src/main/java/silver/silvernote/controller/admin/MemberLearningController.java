@@ -6,14 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.DailyLearning;
-import silver.silvernote.domain.LearningSchedule;
 import silver.silvernote.domain.MemberLearning;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.domain.member.Member;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.HttpStatusEnum;
 import silver.silvernote.responsemessage.Message;
-import silver.silvernote.service.*;
+import silver.silvernote.service.DailyLearningService;
+import silver.silvernote.service.MemberLearningService;
+import silver.silvernote.service.MemberService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;

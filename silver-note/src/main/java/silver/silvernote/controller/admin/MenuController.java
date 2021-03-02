@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.Center;
+import silver.silvernote.domain.Meal;
 import silver.silvernote.domain.Menu;
-import silver.silvernote.domain.Schedule;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.HttpStatusEnum;
@@ -51,10 +51,15 @@ public class MenuController {
     public ResponseEntity<Message> saveMenu(@RequestBody @Valid MenuRequestDto request) {
 
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
+        Meal meal = Meal.BuilderByParam()
+                    .breakfast(request.getBreakfast())
+                    .lunch(request.getLunch())
+                    .dinner(request.getDinner())
+                    .build();
 
         Menu menu = Menu.BuilderByParam()
                     .date(request.getDate())
-                    .meal(request.getMeal())
+                    .meal(meal)
                     .center(center)
                     .build();
         
@@ -71,7 +76,13 @@ public class MenuController {
      * */
     @PutMapping("/menus/{id}")
     public ResponseEntity<Message> updateMeal(@PathVariable("id") Long id,
-                                              @RequestBody String meal) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
+                                              @RequestBody MealUpdateRequestDto request) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
+
+        Meal meal = Meal.BuilderByParam()
+                    .breakfast(request.getBreakfast())
+                    .lunch(request.getLunch())
+                    .dinner(request.getDinner())
+                    .build();
 
         menuService.updateMeal(id, meal);
 
@@ -109,6 +120,17 @@ public class MenuController {
 
         @NotNull(message = "센터 ID를 확인하세요")
         private Long centerId;
+
+        private String breakfast;
+        private String lunch;
+        private String dinner;
+    }
+
+    @Data
+    static class MealUpdateRequestDto {
+        private String breakfast;
+        private String lunch;
+        private String dinner;
     }
 
 
@@ -119,7 +141,7 @@ public class MenuController {
     static class MenuResponseDto {
         private Long id;
         private LocalDate date;
-        private String meal;
+        private Meal meal;
         private Long centerId;
 
         public MenuResponseDto(Menu menu) {

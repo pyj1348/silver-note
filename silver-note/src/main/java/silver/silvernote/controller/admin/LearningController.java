@@ -9,13 +9,13 @@ import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.LearningCategory;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
-import silver.silvernote.responsemessage.Message;
 import silver.silvernote.responsemessage.HttpStatusEnum;
+import silver.silvernote.responsemessage.Message;
 import silver.silvernote.service.LearningCategoryService;
 import silver.silvernote.service.LearningService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,6 +31,15 @@ public class LearningController {
     /**
      * 조회
      * */
+    @GetMapping("/learnings/all")
+    public ResponseEntity<Message> findLearnings() {
+
+        List<LearningResponseDto> collect = learningService.findLearnings().stream().map(LearningResponseDto::new).collect(Collectors.toList());
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
 
     @GetMapping("/learnings")
     public ResponseEntity<Message> findLearningsByCategory(@RequestParam ("categoryId") Long categoryId) {
@@ -42,7 +51,6 @@ public class LearningController {
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
-
 
     /**
      * 생성
@@ -118,12 +126,14 @@ public class LearningController {
         private String name;
         private String description;
         private String url;
+        private Long categoryId;
 
         public LearningResponseDto(Learning learning) {
             this.id = learning.getId();
             this.name = learning.getName();
             this.description = learning.getDescription();
             this.url = learning.getUrl();
+            this.categoryId = learning.getCategory().getId();
         }
     }
 

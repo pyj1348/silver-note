@@ -7,10 +7,10 @@ import java.time.LocalDateTime;
 @Data
 public class SimpleResponseDto {
     private Long id;
-    private LocalDateTime localDateTime;
+    private LocalDateTime time;
 
-    public SimpleResponseDto(Long id, LocalDateTime localDateTime) {
+    public SimpleResponseDto(Long id, LocalDateTime time) {
         this.id = id;
-        this.localDateTime = localDateTime;
+        this.time = time;
     }
 }
