@@ -20,10 +20,26 @@
     - URL : "/learning-schedules/new"
     - Body : 
         - centerId : Long
-        - date : Date
+        - data : List
+            - date : Date
+            - learnings : List
+                - learnigId : Long    
     - Return :
-        - id : Long 
         - date : Date // 처리시각 
+
+* 수정
+
+    - 방식 : put 
+    - URL : "/learning-schedules/present"
+    - Body : 
+        - centerId : Long
+        - data : List
+            - date : Date
+            - learnings : List
+                - learnigId : Long    
+    - Return :
+        - date : Date // 처리시각 
+
 
 * 삭제
 
