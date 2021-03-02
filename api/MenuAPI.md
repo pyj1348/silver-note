@@ -6,7 +6,10 @@
     - URL : "/menus"
     - Return :
         - id : Long
-        - meal : String // 추후 embedded로 조/중/석 나눠야할듯
+        - meal : 
+            - breakfast : Stirng
+            - lunch : String
+            - dinner : String
         - date : Date
         - centerId : Long
 
@@ -15,7 +18,10 @@
     - 방식 : POST 
     - URL : "/menus/new"
     - Body : 
-        - meal : String
+        - meal : 
+            - breakfast : Stirng
+            - lunch : String
+            - dinner : String
         - date : Date
         - centerId : Long
     - Return :
@@ -27,7 +33,10 @@
     - 방식 : PUT 
     - URL : "/menus/{id}"
     - Body : 
-        - meal : String
+        - meal : 
+            - breakfast : Stirng
+            - lunch : String
+            - dinner : String
     - Return :
         - id : Long 
         - date : Date // 처리시각 
