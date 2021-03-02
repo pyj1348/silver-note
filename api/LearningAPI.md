@@ -1,14 +1,28 @@
 ### Learning 학습
 
-* 조회
+* 전체조회
 
     - 방식 : GET 
-    - URL : "/learnings"
+    - URL : "/learnings/all"
     - Return :
         - id : Long
         - name : String
         - description : String
         - url : String
+        - categoryId : Long
+
+* 카테고리별 조회
+
+    - 방식 : GET 
+    - URL : "/learnings?categoryId=?"
+    - Param : 
+        - categoryId : Long
+    - Return :
+        - id : Long
+        - name : String
+        - description : String
+        - url : String
+        - categoryId : Long
 
 * 등록
 
@@ -18,6 +32,7 @@
         - name : String
         - decription : String
         - url : String
+        - categoryId : Long
     - Return :
         - id : Long 
         - date : Date // 처리시각 
@@ -30,6 +45,7 @@
         - name : String
         - decription : String
         - url : String
+        - categoryId : Long
     - Return :
         - id : Long 
         - date : Date // 처리시각 
