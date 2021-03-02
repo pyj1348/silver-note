@@ -4,10 +4,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -22,7 +26,8 @@ public class Menu {
     @Embedded
     private Meal meal;
 
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "center_id")
     private Center center;
 

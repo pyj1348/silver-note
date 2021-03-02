@@ -4,6 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +31,8 @@ public class Notification {
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(fetch = LAZY) // Member 테이블을 참조하는 FK
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "center_id")
     private Center center;
 
