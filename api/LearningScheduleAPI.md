@@ -11,7 +11,7 @@
     - Return :
         - List :
             - date : Date
-            - learnings : List
+            - learningIds : List
                 - learnigId : Long   
         
 * 등록
@@ -22,7 +22,7 @@
         - centerId : Long
         - data : List
             - date : Date
-            - learnings : List
+            - learningIds : List
                 - learnigId : Long    
     - Return :
         - date : Date // 처리시각 
@@ -35,7 +35,7 @@
         - centerId : Long
         - data : List
             - date : Date
-            - learnings : List
+            - learningIds : List
                 - learnigId : Long    
     - Return :
         - date : Date // 처리시각 
