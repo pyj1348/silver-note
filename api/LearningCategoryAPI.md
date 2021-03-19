@@ -1,17 +1,25 @@
 ### Learning - Category 학습 카테고리
 
-* 조회
+* 상위 카테고리 조회
 
     - 방식 : GET 
-    - URL : "/learning-categories"
+    - URL : "/learning-categories/parents"
     - Return :
         - List
-            - parent :
-                - id : Long
-                - name : String
-            - children : List
-                - id : Long
-                - name : string
+            - id : Long
+            - name : String
+
+* 하위 카테고리 조회
+
+    - 방식 : GET 
+    - URL : "/learning-categories/children?parentId=?"
+    - Param :
+        - parentId : Long 
+    - Return :
+        - List
+            - id : Long
+            - name : String
+
 * 등록
 
     - 방식 : POST 
