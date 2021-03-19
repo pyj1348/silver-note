@@ -50,8 +50,8 @@ public class MemberLearningService {
     public List<MemberLearning> findMemberLearnings() {
         return memberLearningRepository.findAll();
     }
-    public List<MemberLearning> findMemberLearningsByMemberAndDate(Member member, LocalDate date) {
-        return memberLearningRepository.findAllByMemberAndDate(member, date);
+    public List<MemberLearning> findMemberLearningsByMemberAndDate(Long memberId, LocalDate startDate, LocalDate endDate) {
+        return memberLearningRepository.findAllByMemberAndDate(memberId, startDate, endDate);
     }
 
 

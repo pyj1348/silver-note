@@ -21,8 +21,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,11 +36,32 @@ public class MemberLearningController {
      * 조회
      * */
     @GetMapping("/member-learnings")
-    public ResponseEntity<Message> findMemberLearnings() {
+    public ResponseEntity<Message> findMemberLearnings(@RequestParam("memberId") Long memberId,
+                                                       @RequestParam("start") String start,
+                                                       @RequestParam("end") String end) {
 
-        List<MemberLearningResponseDto> collect = memberLearningService.findMemberLearnings().stream().map(MemberLearningResponseDto::new).collect(Collectors.toList());
+
+        List<MemberLearning> collect = memberLearningService
+                .findMemberLearningsByMemberAndDate(memberId, LocalDate.parse(start), LocalDate.parse(end));
+
+        Map<LocalDate, MemberLearningResponseDto> map = new HashMap<>();
+
+        for(MemberLearning memberLearning : collect){
+            MemberLearningResponseDto dto;
+
+            if (map.containsKey(memberLearning.getDate())){
+                dto = map.get(memberLearning.getDate());
+            }
+            else{
+                dto = new MemberLearningResponseDto();
+            }
+
+            dto.addLearning(memberLearning);
+            map.put(memberLearning.getDate(), dto);
+        }
+
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", map), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
@@ -51,7 +71,7 @@ public class MemberLearningController {
      * */
     @PostMapping("/member-learnings/new")
     public ResponseEntity<Message> saveMemberLearning(@RequestBody @Valid MemberLearningRequestDto request) {
-        memberLearningService.deleteMemberLearningsByMemberAndDate(request.getMemberIds(), request.getStartDate(), request.getEndDate());
+        memberLearningService.deleteMemberLearningsByMemberAndDate(request.getMemberIds(), request.getStart(), request.getEnd());
 
         List<Member> members = memberService.findMembersByIds(request.getMemberIds());
 
@@ -106,12 +126,10 @@ public class MemberLearningController {
     static class MemberLearningRequestDto {
 
         @NotNull
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd")
-        private LocalDate startDate;
+        private LocalDate start;
 
         @NotNull
-        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME, pattern = "yyyy-MM-dd")
-        private LocalDate endDate;
+        private LocalDate end;
 
         @NotNull
         private List<Long> memberIds;
@@ -129,20 +147,17 @@ public class MemberLearningController {
     }
 
 
-
     /**
      * Response DTO
      * */
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
     static class MemberLearningResponseDto {
-        private Long id;
-        private Long memberId;
-        private Long learningId;
+        private List<Long> learningIds = new ArrayList<>();
+        private List<String> learningNames = new ArrayList<>();
 
-        public MemberLearningResponseDto(MemberLearning memberLearning) {
-            this.id = memberLearning.getId();
-            this.memberId = memberLearning.getMember().getId();
-            this.learningId = memberLearning.getLearning().getId();
+        public void addLearning(MemberLearning memberLearning){
+            this.learningIds.add(memberLearning.getLearning().getId());
+            this.learningNames.add(memberLearning.getLearning().getName());
         }
     }
 
