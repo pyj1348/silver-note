@@ -42,7 +42,6 @@ public class UserJoinController {
     private final UserService userService;
     private final CenterService centerService;
     private final MemberService memberService;
-    private final FamilyService familyService;
 
 
     /**
@@ -64,7 +63,7 @@ public class UserJoinController {
     @GetMapping("/users") // 필요한가
     public ResponseEntity<Message> findUsers() {
 
-        List<UserResponseDto> collect = userService.findUsers().stream().map(UserResponseDto::new).collect(Collectors.toList());
+        List<UserJoinResponseDto> collect = userService.findUsers().stream().map(UserJoinResponseDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
@@ -72,7 +71,7 @@ public class UserJoinController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/users/members/verification")
+    @PostMapping("/users/verification")
     public ResponseEntity<Message> verifyMemberToJoin(@RequestBody @Valid VerifyingRequestDto request){
 
         // 조회된 결과가 없으면 Advice가 not found 반환
@@ -93,7 +92,10 @@ public class UserJoinController {
         }
     }
 
-    @PostMapping("/users/members/member/new")
+    // email 중복확인도 있어야겠네
+
+
+    @PostMapping("/users/members/new")
     public ResponseEntity<Message> connectToMember(@RequestBody @Valid UserJoinRequestDto request) {
 
         Member member = memberService.findOne(request.getMemberId()).orElseThrow(NoSuchElementException::new);
@@ -115,7 +117,7 @@ public class UserJoinController {
     }
 
 
-    @PostMapping("/users/members/family/new")
+    @PostMapping("/users/family/new")
     public ResponseEntity<Message> saveFamilyUser(@RequestBody @Valid FamilyJoinRequestDto request) {
 
         Patient patient = memberService.findOnePatient(request.getPatientId()).orElseThrow(NoSuchElementException::new);
@@ -180,7 +182,7 @@ public class UserJoinController {
         private String emailId;
 
         @NotBlank (message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
-        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
                 message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
         private String password;
 
@@ -200,7 +202,7 @@ public class UserJoinController {
         private String emailId;
 
         @NotBlank (message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
-        @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
                 message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
         private String password;
 
@@ -222,23 +224,26 @@ public class UserJoinController {
         private Long centerId;
     }
 
+    // 로그인
+    // 패스워드변경
+
     /**
      * Response DTO
      * */
 
 
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class UserResponseDto {
+    static class UserJoinResponseDto {
         private Long id;
         private String emailId;
         private Long centerId;
-        private Long memberID;
+        private Long memberId;
 
-        public UserResponseDto(User user){
+        public UserJoinResponseDto(User user){
             this.id = user.getId();
             this.emailId = user.getEmailId();
             this.centerId = user.getCenter().getId();
-            this. memberID = user.getMember().getId();
+            this.memberId = user.getMember().getId();
         }
     }
 }

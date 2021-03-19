@@ -51,10 +51,11 @@ public class MemberController {
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
+
     @GetMapping("/members/patients")
     public ResponseEntity<Message> findPatients(@RequestParam("centerId") Long centerId) {
 
-        List<SimpleMemberResponseDto> patients = memberService.findPatientsByCenterId(centerId).stream().map(SimpleMemberResponseDto::new).collect(Collectors.toList());;
+        List<PatientResponseDto> patients = memberService.findPatientsByCenterId(centerId).stream().map(PatientResponseDto::new).collect(Collectors.toList());;
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", patients), // STATUS, MESSAGE, DATA
@@ -289,4 +290,20 @@ public class MemberController {
             this.name = member.getName();
         }
     }
+
+    @Data // JSON 요청의 응답으로 보낼 데이터 클래스
+    static class PatientResponseDto {
+        private Long id;
+        private String name;
+        private int grade;
+        private Long managerId;
+
+        public PatientResponseDto(Patient patient){
+            this.id = patient.getId();
+            this.name = patient.getName();
+            this.grade = patient.getGrade();
+            this.managerId = patient.getManager().getId();
+        }
+    }
+
 }

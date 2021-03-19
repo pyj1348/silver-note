@@ -53,6 +53,9 @@ public class UserService {
     public Optional<User> findOne(Long userId) {
         return userRepository.findById(userId);
     }
+    public Optional<User> findOneByEmailIdAndPassword(String emailId, String password) {
+        return userRepository.findByEmailIdAndPassword(emailId, password);
+    }
 
 
 }
