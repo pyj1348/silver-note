@@ -23,6 +23,9 @@
     - Return :
         - id : Long
         - name : String
+        - managerId : Long
+        - managerName : String
+        - grade : int
 
 * 멤버 등록
 
