@@ -294,14 +294,16 @@ public class MemberController {
     static class PatientResponseDto {
         private Long id;
         private String name;
-        private int grade;
         private Long managerId;
+        private String managerName;
+        private int grade;
 
         public PatientResponseDto(Patient patient){
             this.id = patient.getId();
             this.name = patient.getName();
-            this.grade = patient.getGrade();
             this.managerId = patient.getManager().getId();
+            this.managerName = patient.getManager().getName();
+            this.grade = patient.getGrade();
         }
     }
 

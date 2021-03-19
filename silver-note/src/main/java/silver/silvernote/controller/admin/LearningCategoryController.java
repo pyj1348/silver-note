@@ -29,7 +29,7 @@ public class LearningCategoryController {
     /**
      * 조회
      * */
-    @GetMapping("/learning-categories")
+    @GetMapping("/learning-categories/parents")
     public ResponseEntity<Message> findLearningCategories() {
 
        List<LearningCategoryResponseDto> collect =
