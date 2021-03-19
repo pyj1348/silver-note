@@ -7,7 +7,8 @@
     - Return :
         - id : Long
         - name : String
-        - description : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
         - categoryId : Long
 
@@ -20,7 +21,8 @@
     - Return :
         - id : Long
         - name : String
-        - description : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
         - categoryId : Long
 
@@ -30,7 +32,8 @@
     - URL : "/learnings/new"
     - Body : 
         - name : String
-        - decription : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
         - categoryId : Long
     - Return :
@@ -43,7 +46,8 @@
     - URL : "/learnings/{id}"
     - Body : 
         - name : String
-        - decription : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
         - categoryId : Long
     - Return :
