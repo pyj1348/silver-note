@@ -29,9 +29,9 @@ public class ExerciseService {
      * 정보 변경
      */
     @Transactional
-    public void updateData(Long id, String name, String url, String description){
+    public void updateData(Long id, String name, String briefDescription, String fullDescription, String description){
         Exercise exercise = exerciseRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        exercise.updateData(name, url, description);
+        exercise.updateData(name, briefDescription, fullDescription, description);
         exerciseRepository.save(exercise);
     }
 

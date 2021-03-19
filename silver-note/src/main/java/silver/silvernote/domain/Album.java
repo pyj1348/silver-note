@@ -34,13 +34,11 @@ public class Album {
 
     // image
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member writer;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "center_id")
     private Center center;
 

@@ -61,7 +61,8 @@ public class LearningController {
 
         Learning learning = Learning.BuilderByParam()
                     .name(request.getName())
-                    .description(request.getDescription())
+                    .briefDescription(request.getBriefDescription())
+                    .fullDescription(request.getFullDescription())
                     .url(request.getUrl())
                     .category(category)
                     .build();
@@ -80,7 +81,7 @@ public class LearningController {
     @PutMapping("/learnings/{id}")
     public ResponseEntity<Message> updateLearning(@PathVariable("id") Long id, @RequestBody LearningRequestDto request) {
 
-        learningService.updateData(id, request.getName(), request.getUrl(), request.getDescription());
+        learningService.updateData(id, request.getName(), request.getUrl(), request.getBriefDescription(), request.getFullDescription());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -110,7 +111,8 @@ public class LearningController {
     static class LearningRequestDto {
         @NotBlank (message = "이름을 확인하세요")
         private String name;
-        private String description;
+        private String briefDescription;
+        private String fullDescription;
         private String url;
         private Long categoryId;
 
@@ -124,14 +126,16 @@ public class LearningController {
     static class LearningResponseDto {
         private Long id;
         private String name;
-        private String description;
+        private String briefDescription;
+        private String fullDescription;
         private String url;
         private Long categoryId;
 
         public LearningResponseDto(Learning learning) {
             this.id = learning.getId();
             this.name = learning.getName();
-            this.description = learning.getDescription();
+            this.briefDescription = learning.getBriefDescription();
+            this.fullDescription = learning.getFullDescription();
             this.url = learning.getUrl();
             this.categoryId = learning.getCategory().getId();
         }

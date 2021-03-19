@@ -7,8 +7,12 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import silver.silvernote.domain.member.Member;
+import silver.silvernote.domain.member.PermissionStatus;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -22,25 +26,28 @@ public class MemberLearning {
     @Column(name = "member_learning_id")
     private Long id;
 
-    private int progress;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "learning_schedule_id")
-    private DailyLearning dailyLearning;
+    @NotNull
+    private LocalDate date;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "center_id")
+    private Center center;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "learning_id")
+    private Learning learning;
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public MemberLearning(int progress, Member member, DailyLearning dailyLearning) {
-        this.progress = progress;
+    public MemberLearning(Member member, Learning learning, LocalDate date) {
         this.member = member;
-        this.dailyLearning = dailyLearning;
+        this.center = member.getCenter();
+        this.learning = learning;
+        this.date = date;
     }
 
-    public void updateProgress(int progress){ this.progress = progress; }
 }

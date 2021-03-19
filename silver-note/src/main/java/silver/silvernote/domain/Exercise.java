@@ -24,20 +24,23 @@ public class Exercise {
     @NotBlank
     private String name;
 
-    private String description;
+    private String briefDescription;
+    private String fullDescription;
     private String url;
 
     // 분류?
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Exercise(String name, String description, String url) {
+    public Exercise(String name, String briefDescription, String fullDescription, String url) {
         this.name = name;
-        this.description = description;
+        this.briefDescription = briefDescription;
+        this.fullDescription = fullDescription;
         this.url = url;
     }
-    public void updateData(String name, String description, String url) {
+    public void updateData(String name, String briefDescription, String fullDescription, String url) {
         this.name = name;
-        this.description = description;
+        this.briefDescription = briefDescription;
+        this.fullDescription = fullDescription;
         this.url = url;
     }
 }

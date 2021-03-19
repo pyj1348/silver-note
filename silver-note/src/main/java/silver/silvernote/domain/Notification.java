@@ -31,8 +31,7 @@ public class Notification {
     @NotNull
     private LocalDate date;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "center_id")
     private Center center;
 

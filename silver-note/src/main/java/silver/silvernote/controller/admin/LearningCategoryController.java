@@ -14,8 +14,10 @@ import silver.silvernote.service.LearningCategoryService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,7 +33,19 @@ public class LearningCategoryController {
     public ResponseEntity<Message> findLearningCategories() {
 
        List<LearningCategoryResponseDto> collect =
-               learningCategoryService.findCategories().stream().map(LearningCategoryResponseDto::new).collect(Collectors.toList());
+               learningCategoryService.findTopCategories().stream().map(LearningCategoryResponseDto::new).collect(Collectors.toList());
+
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/learning-categories/children")
+    public ResponseEntity<Message> findChildrenCategory(@RequestParam("parentId") Long parentId) {
+
+        List<LearningCategoryResponseDto> collect = learningCategoryService.findCategoriesByParent(parentId).stream()
+                .map(LearningCategoryResponseDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
@@ -45,9 +59,22 @@ public class LearningCategoryController {
     @PostMapping("/learning-categories/new")
     public ResponseEntity<Message> saveLearningCategory(@RequestBody @Valid LearningCategoryRequestDto request) {
 
-        LearningCategory category = LearningCategory.BuilderByParam()
+        LearningCategory category;
+
+        if(request.getParentId() == 0){
+            category = LearningCategory.BuilderByParam()
                     .name(request.getName())
                     .build();
+        }
+        else{
+            LearningCategory parent = learningCategoryService.findOne(request.parentId).orElseThrow(NoSuchElementException::new);
+
+            category = LearningCategory.BuilderByParam()
+                    .name(request.getName())
+                    .parent(parent)
+                    .build();
+        }
+
 
         learningCategoryService.save(category);
 
@@ -98,6 +125,9 @@ public class LearningCategoryController {
         @NotBlank(message = "이름을 확인하세요")
         private String name;
 
+        @NotNull(message = "상위 카테고리 ID를 확인하세요")
+        private Long parentId;
+
     }
 
 
@@ -114,6 +144,5 @@ public class LearningCategoryController {
             this.name = category.getName();
         }
     }
-
 
 }

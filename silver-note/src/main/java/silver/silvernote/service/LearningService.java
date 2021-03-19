@@ -33,9 +33,9 @@ public class LearningService {
      * 정보 변경
      */
     @Transactional
-    public void updateData(Long id, String name, String url, String description){
+    public void updateData(Long id, String name, String url, String briefDescription, String fullDescription){
         Learning learning = learningRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        learning.updateData(name, url, description);
+        learning.updateData(name, url, briefDescription, fullDescription);
         learningRepository.save(learning);
     }
 
@@ -54,6 +54,9 @@ public class LearningService {
      */
     public List<Learning> findLearnings() {
         return learningRepository.findAll();
+    }
+    public List<Learning> findLearningsByIds(List<Long> ids) {
+        return learningRepository.findAllById(ids);
     }
 
     public List<Learning> findLearningsByCategory(LearningCategory category){

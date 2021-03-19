@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 public class Patient extends Member {
 
-    @OneToMany(mappedBy = "family", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient")
     private List<Family> familyList = new ArrayList<>();
 
     private int grade;

@@ -31,13 +31,11 @@ public class MemberExercise {
     @Size(min = 0)
     private int progress;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 

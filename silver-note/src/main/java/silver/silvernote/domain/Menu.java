@@ -26,8 +26,7 @@ public class Menu {
     @Embedded
     private Meal meal;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "center_id")
     private Center center;
 

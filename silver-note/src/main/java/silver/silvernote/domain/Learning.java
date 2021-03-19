@@ -25,27 +25,33 @@ public class Learning {
     @NotBlank
     private String name;
 
-    private String description;
+    private String briefDescription;
+    private String fullDescription;
+
     private String url;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+
+//    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "category_id")
     private LearningCategory category;
 
     // 분류?
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Learning(String name, String description, String url, LearningCategory category) {
+    public Learning(String name, String briefDescription, String fullDescription, String url, LearningCategory category) {
         this.name = name;
-        this.description = description;
+        this.briefDescription = briefDescription;
+        this.fullDescription = fullDescription;
         this.url = url;
         this.category = category;
     }
 
-    public void updateData(String name, String description, String url) {
+    public void updateData(String name, String briefDescription, String fullDescription, String url) {
         this.name = name;
-        this.description = description;
+        this.briefDescription = briefDescription;
+        this.fullDescription = fullDescription;
         this.url = url;
     }
 }

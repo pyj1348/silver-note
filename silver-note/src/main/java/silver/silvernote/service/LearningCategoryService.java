@@ -49,6 +49,12 @@ public class LearningCategoryService {
     public List<LearningCategory> findCategories() {
         return learningCategoryRepository.findAll();
     }
+    public List<LearningCategory> findCategoriesByParent(Long parentId) {
+        return learningCategoryRepository.findAllByParent(parentId);
+    }
+    public List<LearningCategory> findTopCategories() {
+        return learningCategoryRepository.findAllTopCategory();
+    }
 
     /**
      * 개별 일정 조회

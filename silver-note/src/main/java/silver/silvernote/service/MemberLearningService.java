@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import silver.silvernote.domain.MemberLearning;
+import silver.silvernote.domain.member.Member;
 import silver.silvernote.repository.MemberLearningRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -28,13 +30,6 @@ public class MemberLearningService {
     /**
      * 정보 변경
      */
-    @Transactional
-    public void updateProgress(Long id, int progress) {
-        MemberLearning memberLearning = memberLearningRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        memberLearning.updateProgress(progress);
-        memberLearningRepository.save(memberLearning);
-    }
-
 
     /**
      * 멤버센터학습 삭제
@@ -44,11 +39,19 @@ public class MemberLearningService {
         memberLearningRepository.deleteById(id);
     }
 
+    @Transactional
+    public void deleteMemberLearningsByMemberAndDate(List<Long> memberIds, LocalDate startDate, LocalDate endDate){
+        memberLearningRepository.deleteAllByDateBetween(memberIds, startDate, endDate);
+    }
+
     /**
      * 전체 멤버센터학습 조회
      */
     public List<MemberLearning> findMemberLearnings() {
         return memberLearningRepository.findAll();
+    }
+    public List<MemberLearning> findMemberLearningsByMemberAndDate(Member member, LocalDate date) {
+        return memberLearningRepository.findAllByMemberAndDate(member, date);
     }
 
 

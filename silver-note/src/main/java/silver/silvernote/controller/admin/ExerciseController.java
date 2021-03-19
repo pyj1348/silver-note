@@ -46,10 +46,11 @@ public class ExerciseController {
      * 생성
      * */
     @PostMapping("/exercises/new")
-    public ResponseEntity<Message> saveExercise(@RequestBody @Valid ExerciseController.ExerciseRequestDto request) {
+    public ResponseEntity<Message> saveExercise(@RequestBody @Valid ExerciseRequestDto request) {
         Exercise exercise = Exercise.BuilderByParam()
                 .name(request.getName())
-                .description(request.getDescription())
+                .briefDescription(request.getBriefDescription())
+                .fullDescription(request.getFullDescription())
                 .url(request.getUrl())
                 .build();
 
@@ -68,7 +69,7 @@ public class ExerciseController {
     public ResponseEntity<Message> updateExercise(@PathVariable("id") Long id,
                                                   @RequestBody ExerciseRequestDto request) {
 
-        exerciseService.updateData(id, request.getName(), request.getUrl(), request.getDescription());
+        exerciseService.updateData(id, request.getName(), request.getUrl(), request.getBriefDescription(), request.getFullDescription());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -99,6 +100,8 @@ public class ExerciseController {
         @NotBlank (message = "이름을 확인하세요")
         private String name;
         private String description;
+        private String briefDescription;
+        private String fullDescription;
         private String url;
 
     }
@@ -111,13 +114,15 @@ public class ExerciseController {
     static class ExerciseResponseDto {
         private Long id;
         private String name;
-        private String description;
+        private String briefDescription;
+        private String fullDescription;
         private String url;
 
         public ExerciseResponseDto(Exercise exercise) {
             this.id = exercise.getId();
             this.name = exercise.getName();
-            this.description = exercise.getDescription();
+            this.briefDescription = exercise.getBriefDescription();
+            this.fullDescription = exercise.getFullDescription();
             this.url = exercise.getUrl();
         }
     }

@@ -81,6 +81,7 @@ public class MemberService {
      * 센터별 전체 회원 조회
      */
     public List<Patient> findPatientsByCenterId(Long centerId) { return patientRepository.findAllByCenterId(centerId);}
+    public List<Member> findMembersByIds(List<Long> ids) { return memberRepository.findAllById(ids);}
 
     /**
      * 역할별 전체 회원 조회

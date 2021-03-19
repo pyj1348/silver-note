@@ -29,19 +29,16 @@ public class User {
     @Column(unique=true)
     private String emailId;
 
-    @NotBlank (message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
     @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
-            message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
+            message = "비밀번호를 확인하세요 (영어, 숫자, 특수문자 포함 8자 이상)")
     private String password;
 
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "center_id")
     private Center center;
 

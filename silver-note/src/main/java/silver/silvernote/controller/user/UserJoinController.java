@@ -181,9 +181,8 @@ public class UserJoinController {
         @Column(unique=true)
         private String emailId;
 
-        @NotBlank (message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
         @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
-                message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
+                message = "비밀번호를 확인하세요 (영어, 숫자, 특수문자 포함 8자 이상)")
         private String password;
 
     }
@@ -201,9 +200,8 @@ public class UserJoinController {
         @Email
         private String emailId;
 
-        @NotBlank (message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
-                message = "비밀번호를 확인하세요 (대문자, 소문자, 숫자, 특수문자 포함 8자 이상)")
+       @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
+                message = "비밀번호를 확인하세요 (영어, 숫자, 특수문자 포함 8자 이상)")
         private String password;
 
         @Pattern(regexp = "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|[3][01])-[1-4][0-9]{6}$")
