@@ -7,7 +7,8 @@
     - Return :
         - id : Long
         - name : String
-        - description : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
 
 * 등록
@@ -16,7 +17,8 @@
     - URL : "/exercises/new"
     - Body : 
         - name : String
-        - decription : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
     - Return :
         - id : Long 
@@ -28,7 +30,8 @@
     - URL : "/exercises/{id}"
     - Body : 
         - name : String
-        - decription : String
+        - briefDescription : String
+        - fulldescription : String
         - url : String
     - Return :
         - id : Long 
