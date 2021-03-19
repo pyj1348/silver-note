@@ -9,12 +9,12 @@
         - start : Date (yyyy-mm-dd)
         - end : Date (yyyy-mm-dd)
     - Rutrn :
-        - data : Map <Date, Learnings>
+        - Map <Date, Learnings>
             - date : Date
-            - learningIds : List
-                - learningId : Long
-            - learningNames : List
-                - learningName : String
+                - learningIds : List
+                    - learningId : Long
+                - learningNames : List
+                    - learningName : String
 
 * 등록
 
