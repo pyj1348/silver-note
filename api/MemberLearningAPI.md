@@ -21,7 +21,8 @@
     - 방식 : POST 
     - URL : "/member-learnings/new"
     - Body : 
-        - memberId : Long
+        - memberIds : List
+            - memberIds : Long
         - start : Date (yyyy-mm-dd)
         - end : Date (yyyy-mm-dd)
         - data : List
