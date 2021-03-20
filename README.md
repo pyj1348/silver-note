@@ -83,13 +83,14 @@ Manger, Emplyee, Patient, Family extends Member
 학습을 분류하는 카테고리 엔티티
 
 
-### 13. Learning - Schedule 센터별 학습일정
-[LearningSchedule API로 이동](./api/LearningScheduleAPI.md)
+### 13. Member - Learning 멤버별 학습일정
+[MemberLearning API로 이동](./api/MemberLearningAPI.md)
 
-센터관리자가 등록된 학습을 일정으로 관리하는 엔티티
+센터관리자가 멤버별로 등록된 학습을 일정으로 관리하는 엔티티
 
 
-### 14. Daily - Learning 일자별 학습목록
-[DailyLearning API로 이동](./api/DailyLearningAPI.md)
+### 14. User 앱 사용자
+[User API로 이동](./api/UserAPI.md)
 
-학습일정 안에 등록된 개별 학습목록
+앱을 사용하는 유저 엔티티
+
