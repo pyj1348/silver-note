@@ -33,10 +33,10 @@
         - id : Long 
         - date : Date // 처리시각
         - 
-* 센터회원 유저 등록
+* 회원가족 유저 등록
 
     - 방식 : POST 
-    - URL : "/users/members/new"
+    - URL : "/users/family/new"
     - Body : 
         - patientId : Long
         - emailId : String
