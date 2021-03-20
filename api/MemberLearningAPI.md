@@ -1,4 +1,4 @@
-### Member - Learning 학습 수강내역
+### Member - Learning 
 
 * 조회
 
