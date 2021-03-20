@@ -8,7 +8,7 @@
         - id : Long
         - name : String
         - briefDescription : String
-        - fullescription : String
+        - fullDescription : String
         - url : String
         - categoryId : Long
 
