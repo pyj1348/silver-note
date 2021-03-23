@@ -111,6 +111,7 @@ public class LearningController {
     static class LearningRequestDto {
         @NotBlank (message = "이름을 확인하세요")
         private String name;
+
         private String briefDescription;
         private String fullDescription;
         private String url;

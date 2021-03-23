@@ -15,7 +15,13 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Member> findMembersByStatus(JoinStatus joinStatus);
     Optional<Member> findByNameAndRrn(String name, String rrn);
 
+    Optional<Member> findByLoginId(String loginId);
+    Optional<Member> findByPassword(String password);
+
+    Optional<Member> findByLoginIdAndPassword(String loginId, String password);
+
     @Query("SELECT m FROM Member m WHERE m.id in :ids")
     List<Member> findAllById(@Param("ids") List<Long> ids);
+
 
 }

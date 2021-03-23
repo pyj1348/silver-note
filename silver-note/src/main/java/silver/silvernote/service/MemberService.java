@@ -43,44 +43,77 @@ public class MemberService {
      * 정보 수정
      */
     @Transactional
-    public void updateData(Long id, String phone, Address address) {
+    public Long updateData(Long id, String email, String phone, Address address) {
         Member member = memberRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        member.updateData(phone, address);
+        member.updateData(email, phone, address);
         memberRepository.save(member);
+
+        return member.getId();
     }
+
+
+    @Transactional
+    public Long changeManager(Long patientId, Long managerId){
+        Patient patient = patientRepository.findById(patientId).orElseThrow(NoSuchElementException::new);
+        Member manager = memberRepository.findById(managerId).orElseThrow(NoSuchElementException::new);
+
+        patient.changeManager(manager);
+        patientRepository.save(patient);
+
+        return patient.getId();
+    }
+
+    @Transactional
+    public Long updateGrade(Long id, int grade){
+        Patient patient = patientRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        patient.updateGrade(grade);
+        patientRepository.save(patient);
+
+        return patient.getId();
+    }
+    /**
+     * 가입 상태 수정
+     */
+    @Transactional
+    public Long updateLoginData(Long id, String loginId, String password){
+        Member member = memberRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        member.updateLoginData(loginId, password);
+        member.updateStatus(JoinStatus.JOINED);
+        memberRepository.save(member);
+
+        return member.getId();
+    }
+
 
     /**
      * 가입 상태 수정
      */
     @Transactional
-    public void updateStatus(Long id, JoinStatus status) {
+    public Long updateStatus(Long id, JoinStatus status) {
         Member member = memberRepository.findById(id).orElseThrow(NoSuchElementException::new);
         member.updateStatus(status);
         memberRepository.save(member);
-    }
 
-    /**
-     * 매니저 권한 상태 수정
-     */
-    @Transactional
-    public void updateManagerPermission(Long id, PermissionStatus permission) {
-        Manager manager = managerRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        manager.updatePermission(permission);
-        memberRepository.save(manager);
+        return member.getId();
     }
 
     /**
      * 회원 삭제
      */
     @Transactional
-    public void deleteMember(Long id){
+    public Long deleteMember(Long id){
         memberRepository.deleteById(id);
+        return id;
     }
 
     /**
      * 센터별 전체 회원 조회
      */
+    public List<Manager> findManagersByCenterId(Long centerId) { return managerRepository.findAllByCenterId(centerId);}
+    public List<Employee> findEmployeesByCenterId(Long centerId) { return employeeRepository.findAllByCenterId(centerId);}
     public List<Patient> findPatientsByCenterId(Long centerId) { return patientRepository.findAllByCenterId(centerId);}
+    public List<Family> findFamilyByCenterId(Long centerId) { return familyRepository.findAllByCenterId(centerId);}
+
     public List<Member> findMembersByIds(List<Long> ids) { return memberRepository.findAllById(ids);}
 
     /**
@@ -89,7 +122,7 @@ public class MemberService {
     public List<Manager> findManagers() {
         return managerRepository.findAll();
     }
-    public List<Manager> findWaitingManagers() { return managerRepository.findManagersByPermission(PermissionStatus.WAITING); }
+    public List<Manager> findWaitingManagers() { return managerRepository.findManagersByStatus(JoinStatus.WAITING); }
 
     public List<Employee> findEmployees() {
         return employeeRepository.findAll();
@@ -105,7 +138,17 @@ public class MemberService {
     public Optional<Member> findOne(Long memberId) {
         return memberRepository.findById(memberId);
     }
+    public Optional<Member> findOneByLoginId(String loginId) {
+        return memberRepository.findByLoginId(loginId);
+    }
+    public Optional<Member> findOneByPassword(String password) {
+        return memberRepository.findByPassword(password);
+    }
+
     public Optional<Member> findOne(String name, String rrn) { return memberRepository.findByNameAndRrn(name, rrn); }
+    public Optional<Member> findOneByLoginIdAndPassword(String loginId, String password) {
+        return memberRepository.findByLoginIdAndPassword(loginId, password);
+    }
 
 
     /**

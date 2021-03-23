@@ -4,8 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -48,7 +46,7 @@ public class Learning {
         this.category = category;
     }
 
-    public void updateData(String name, String briefDescription, String fullDescription, String url) {
+    public void updateData(String name, String url, String briefDescription, String fullDescription) {
         this.name = name;
         this.briefDescription = briefDescription;
         this.fullDescription = fullDescription;

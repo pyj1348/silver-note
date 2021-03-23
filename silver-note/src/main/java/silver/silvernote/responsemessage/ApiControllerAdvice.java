@@ -32,6 +32,23 @@ public class ApiControllerAdvice {
         return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(NoIdElementException.class)
+    public ResponseEntity<Message> NoIdElementExceptions(Exception e) {
+        Map<String, String> error = new HashMap<>();
+        error.put("errorClass", e.getClass().getName());
+        error.put("errorMessage", e.getMessage());
+        Message message = new Message(HttpStatusEnum.BAD_REQUEST, "조회된 ID가 없습니다", error);
+        return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoPasswordElementException.class)
+    public ResponseEntity<Message> NoPasswordElementExceptions(Exception e) {
+        Map<String, String> error = new HashMap<>();
+        error.put("errorClass", e.getClass().getName());
+        error.put("errorMessage", e.getMessage());
+        Message message = new Message(HttpStatusEnum.BAD_REQUEST, "비밀번호가 일치하지 않습니다", error);
+        return new ResponseEntity<>(message, headers, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Message> handleValidationExceptions(MethodArgumentNotValidException ex){

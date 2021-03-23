@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 import silver.silvernote.domain.Address;
 import silver.silvernote.domain.Center;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("M")
@@ -16,19 +17,9 @@ import javax.persistence.*;
 @Getter
 public class Manager extends Member {
 
-    @Enumerated(EnumType.STRING)
-    private PermissionStatus permission;
-
-    @PrePersist // default 세팅
-    public void prePersist() {
-        this.permission = this.permission == null ? PermissionStatus.WAITING : this.permission;
-        super.prePersist();
-    }
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Manager(Center center, String name, String sex, String rrn, String phone, Address address, JoinStatus status){
-        createMember(center, name, sex, rrn, phone, address, status);
+    public Manager(Center center, String loginId, String password, String name, String email, String sex, String rrn, String phone, Address address, JoinStatus status){
+        createMember(center, loginId, password, name, email, sex, rrn, phone, address, status);
     }
-
-    public void updatePermission(PermissionStatus permission){ this.permission = permission; }
 }

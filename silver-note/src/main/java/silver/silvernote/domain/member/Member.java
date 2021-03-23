@@ -7,6 +7,7 @@ import silver.silvernote.domain.Address;
 import silver.silvernote.domain.Center;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -24,6 +25,19 @@ public abstract class Member {
 
     @NotBlank (message = "이름을 확인하세요")
     private String name;
+
+
+    @Column(unique=true)
+    private String loginId;
+
+    //    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$",
+//            message = "비밀번호를 확인하세요 (영어, 숫자, 특수문자 포함 8자 이상)")
+    private String password;
+
+
+    @Email
+    @Column(unique=true)
+    private String email;
 
     @NotBlank (message = "성별을 입력하세요 (남|여)")
     @Pattern(regexp = "^남$|^여$")
@@ -64,9 +78,12 @@ public abstract class Member {
         }
     }
 
-    protected void createMember(Center center, String name, String sex, String rrn, String phone, Address address, JoinStatus status) {
+    protected void createMember(Center center, String loginId, String password, String name, String email, String sex, String rrn, String phone, Address address, JoinStatus status) {
         this.center = center;
+        this.loginId = loginId;
+        this.password = password;
         this.name = name;
+        this.email = email;
         this.sex = sex;
         this.rrn = rrn;
         this.phone = phone;
@@ -77,9 +94,15 @@ public abstract class Member {
 
     public void updateStatus(JoinStatus status) { this.status = status; }
 
-    public void updateData(String phone, Address address) {
+    public void updateData(String email, String phone, Address address) {
+        this.email = email;
         this.phone = phone;
         this.address = address;
+    }
+
+    public void updateLoginData(String loginId, String password) {
+        this.loginId = loginId;
+        this.password = password;
     }
 
 }

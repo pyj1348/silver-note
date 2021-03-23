@@ -5,7 +5,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import silver.silvernote.domain.Learning;
 import silver.silvernote.domain.LearningCategory;
-import silver.silvernote.domain.member.Member;
 
 import java.util.List;
 import java.util.Optional;

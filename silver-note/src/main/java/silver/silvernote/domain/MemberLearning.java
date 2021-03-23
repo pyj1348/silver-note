@@ -4,14 +4,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import silver.silvernote.domain.member.Member;
-import silver.silvernote.domain.member.PermissionStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
 import java.time.LocalDate;
 
 import static javax.persistence.FetchType.LAZY;

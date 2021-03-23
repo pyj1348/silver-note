@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Getter
@@ -24,6 +25,7 @@ public class Item {
     @NotBlank
     private String name;
 
+    @Positive(message = "가격을 확인하세요")
     private int price;
 
     // 분류?

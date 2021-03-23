@@ -18,8 +18,8 @@ import javax.persistence.Entity;
 public class Employee extends Member {
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Employee(Center center, String name,  String sex, String rrn, String phone, Address address, JoinStatus status){
-        createMember(center, name, sex, rrn, phone, address, status);
+    public Employee(Center center,  String loginId, String password, String name, String email, String sex, String rrn, String phone, Address address, JoinStatus status){
+        createMember(center, loginId, password, name, email, sex, rrn, phone, address, status);
     }
 
 }

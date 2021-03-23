@@ -22,7 +22,7 @@ import silver.silvernote.service.OrderService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -93,7 +93,7 @@ public class OrderController {
         @PastOrPresent
         private LocalDate date;
 
-        @Size(min = 1)
+        @Positive(message = "개수을 확인하세요")
         private int quantity;
 
         @NotNull(message = "멤버 ID를 확인하세요")

@@ -21,8 +21,8 @@ public class Family extends Member{
     private Patient patient;
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Family(Patient patient, Center center, String name, String sex, String rrn, String phone, Address address, JoinStatus status){
-        createMember(center, name, sex, rrn, phone, address, status);
+    public Family(Patient patient, Center center,  String loginId, String password, String name, String email, String sex, String rrn, String phone, Address address, JoinStatus status){
+        createMember(center, loginId, password, name, email, sex, rrn, phone, address, status);
         this.patient = patient;
     }
 }

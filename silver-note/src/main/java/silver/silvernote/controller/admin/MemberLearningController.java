@@ -2,7 +2,6 @@ package silver.silvernote.controller.admin;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +21,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -78,9 +76,12 @@ public class MemberLearningController {
         for(Member member : members) {
 
             for(DailyLearningsDto dailyLearnings : request.getData()) {
-                List<Learning> learnings = learningService.findLearningsByIds(dailyLearnings.getLearningIds());
 
-                for (Learning learning : learnings) {
+                List<Learning> learningsByIds = learningService.findLearningsByIds(dailyLearnings.getLearningIds());
+
+                for(Long learningId : dailyLearnings.getLearningIds()){
+
+                    Learning learning = learningService.findOne(learningId).orElseThrow(NoSuchElementException::new);
 
                     MemberLearning memberLearning = MemberLearning.BuilderByParam()
                             .member(member)
@@ -142,7 +143,10 @@ public class MemberLearningController {
     @Data
     static class DailyLearningsDto {
 
+        @NotNull
         private LocalDate date;
+
+        @NotNull
         private List<Long> learningIds;
     }
 

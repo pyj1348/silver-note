@@ -16,13 +16,9 @@ import silver.silvernote.service.CenterService;
 import silver.silvernote.service.MemberService;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
@@ -34,24 +30,35 @@ public class MemberController {
     private final CenterService centerService;
 
     /**
-     * 조회
+     * 관리자 조회
      * */
-    @GetMapping("/members")
-    public ResponseEntity<Message> findMembers() {
+    @GetMapping("/members/managers")
+    public ResponseEntity<Message> findManagers(@RequestParam("centerId") Long centerId) {
 
-        Map<String, List<MembersResponseDto>> members = new HashMap<>();
-
-        members.put("manager", memberService.findManagers().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
-        members.put("employee", memberService.findEmployees().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
-        members.put("patient", memberService.findPatients().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
-        members.put("family", memberService.findFamilies().stream().map(MembersResponseDto::new).collect(Collectors.toList()));
+        List<MemberResponseDto> managers = memberService.findManagersByCenterId(centerId).stream().map(MemberResponseDto::new).collect(Collectors.toList());;
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", members), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", managers), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
 
+    /**
+     * 근로자 조회
+     * */
+    @GetMapping("/members/employees")
+    public ResponseEntity<Message> findEmployees(@RequestParam("centerId") Long centerId) {
+        List<MemberResponseDto> employees = memberService.findEmployeesByCenterId(centerId).stream().map(MemberResponseDto::new).collect(Collectors.toList());;
+
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", employees), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
+
+    /**
+     * 회원 조회
+     * */
     @GetMapping("/members/patients")
     public ResponseEntity<Message> findPatients(@RequestParam("centerId") Long centerId) {
 
@@ -63,9 +70,22 @@ public class MemberController {
                 HttpStatus.OK);
     }
 
+    /**
+     * 가족 조회
+     * */
+    @GetMapping("/members/family")
+    public ResponseEntity<Message> findFamily(@RequestParam("centerId") Long centerId) {
+
+        List<FamilyResponseDto> family = memberService.findFamilyByCenterId(centerId).stream().map(FamilyResponseDto::new).collect(Collectors.toList());;
+
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 조회되었습니다", family), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
 
     /**
-     * 생성
+     * 근로자 / 회원 생성
      * */
     @PostMapping("/members/new")
     public ResponseEntity<Message> saveMember(@RequestBody @Valid MemberSaveRequestDto request) {
@@ -79,18 +99,7 @@ public class MemberController {
 
         Member member;
 
-        if (request.getType().equals("M")) {
-            member = Manager.BuilderByParam()
-                    .center(center)
-                    .name(request.getName())
-                    .sex(request.getSex())
-                    .rrn(request.getRrn())
-                    .phone(request.getPhone())
-                    .address(address)
-                    .build();
-
-        }
-        else if (request.getType().equals("E")){
+        if (request.getType().equals("E")){
             member = Employee.BuilderByParam()
                     .center(center)
                     .name(request.getName())
@@ -101,7 +110,7 @@ public class MemberController {
                     .build();
 
         }
-        else{
+        else { // else if "P"
             member = Patient.BuilderByParam()
                     .center(center)
                     .name(request.getName())
@@ -124,9 +133,9 @@ public class MemberController {
     /**
      * 승인 대기 관리자 조회
      * */
-    @GetMapping("/members/manager/waiting")
+    @GetMapping("/members/managers/waiting")
     public ResponseEntity<Message> findWaitingMembers(){
-        List<SimpleMemberResponseDto> collect = memberService.findWaitingManagers().stream().map(SimpleMemberResponseDto::new)
+        List<MemberResponseDto> collect = memberService.findWaitingManagers().stream().map(MemberResponseDto::new)
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
@@ -138,13 +147,13 @@ public class MemberController {
     /**
      * 승인 대기 관리자 승인/거절 요청
      * */
-    @PutMapping("/members/manager/{id}/approval") // 수정
+    @PutMapping("/members/managers/join-request/{id}") // 수정
     public ResponseEntity<Message> responseToJoinRequest(@PathVariable("id") Long id,
                                                          @RequestParam("type") String type) {
         if (type.equals("approve"))
-            memberService.updateManagerPermission(id, PermissionStatus.APPROVED);
+            memberService.updateStatus(id, JoinStatus.JOINED);
         else if (type.equals("decline"))
-            memberService.updateManagerPermission(id, PermissionStatus.DECLINED);
+            memberService.updateStatus(id, JoinStatus.YET);
         else{
             return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                     new Message(HttpStatusEnum.BAD_REQUEST, "메시지 형식이 올바르지 않습니다", "type을 확인하세요 (approve|decline)"), // STATUS, MESSAGE, DATA
@@ -159,21 +168,43 @@ public class MemberController {
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
+
     /**
-     * 수정
+     * 관리자, 매니저, 가족 정보수정
      * */
     @PutMapping("/members/{id}")
-    public ResponseEntity<Message> updateData(@PathVariable("id") Long id, @RequestBody MemberUpdateRequestDto request) {
+    public ResponseEntity<Message> updateData(@PathVariable("id") Long id, @RequestBody @Valid MemberUpdateRequestDto request) {
         Address address = Address.BuilderByParam()
                 .city(request.getCity())
                 .street(request.getStreet())
                 .zipcode(request.getZipcode())
                 .build();
 
-        memberService.updateData(id, request.getPhone(), address);
+        memberService.updateData(id, request.getEmail(), request.getPhone(), address);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                HttpHeaderCreator.createHttpHeader(),
+                HttpStatus.OK);
+    }
+
+    /**
+     * 회원 정보 수정
+     * */
+    @PutMapping("/members/patients/{id}")
+    public ResponseEntity<Message> updateData(@PathVariable("id") Long patientId, @RequestBody @Valid PatientUpdateRequestDto request) {
+        Address address = Address.BuilderByParam()
+                .city(request.getCity())
+                .street(request.getStreet())
+                .zipcode(request.getZipcode())
+                .build();
+
+        memberService.updateData(patientId, request.getEmail(), request.getPhone(), address);
+        memberService.updateGrade(patientId, request.getGrade());
+        memberService.changeManager(patientId, request.getManagerId());
+
+        return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(patientId, LocalDateTime.now())), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }
@@ -203,6 +234,9 @@ public class MemberController {
         @NotBlank (message = "이름을 확인하세요")
         private String name;
 
+        @Email
+        private String email;
+
         @NotBlank (message = "성별을 입력하세요 (남|여)")
         @Pattern(regexp = "^남$|^여$")
         private String sex;
@@ -220,7 +254,7 @@ public class MemberController {
         @NotNull(message = "센터 ID를 확인하세요")
         private Long centerId;
 
-        @Pattern(regexp = "^M$|^E$|^P$", message = "타입을 확인하세요 (M|E|P)")
+        @Pattern(regexp = "^E$|^P$", message = "타입을 확인하세요 (M|E|P)")
         private String type;
     }
 
@@ -233,77 +267,141 @@ public class MemberController {
         private String city;
         private String street;
         private String zipcode;
+
+        @Email(message = "이메일을 확인하세요")
+        private String email;
     }
 
-
-
     @Data
-    static class TypeFilter {
-        private boolean manager;
-        private boolean employee;
-        private boolean family;
-        private boolean patient;
+    static class PatientUpdateRequestDto {
+
+        @Pattern(regexp = "^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$", message = "휴대폰번호를 확인하세요 (010-0000-0000)")
+        private String phone;
+
+        private String city;
+        private String street;
+        private String zipcode;
+
+        @Email(message = "이메일을 확인하세요")
+        private String email;
+
+        @NotNull(message = "담당자 ID를 확인하세요")
+        private Long managerId;
+
+        @Positive(message = "등급을 확인하세요")
+        private int grade;
     }
 
     /**
      * Response DTO
      * */
 
-    @Data
-    static class MemberApprovalRequestDto {
-        @Pattern(regexp = "^a$|^d$", message = "상태값을 확인하세요 (a | d)")
-        private String status;
-
-        @NotNull
-        private TypeFilter type;
-    }
-
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class MembersResponseDto {
+    static class MemberResponseDto {
         private Long id;
+        private String type;
+        private String loginId;
+        private String password;
         private String name;
-        private String phone;
+        private String email;
         private String sex;
-        private Address address;
-        private JoinStatus joinStatus;
-        private Long centerId;
+        private String rrn; // resident registration number
+        private String phone;
+        private String city;
+        private String street;
+        private String zipcode;
+        private JoinStatus status;
 
-        public MembersResponseDto(Member member){
+        public MemberResponseDto(Member member) {
             this.id = member.getId();
+            this.loginId = member.getLoginId();
+            this.password = member.getPassword();
             this.name = member.getName();
+            this.email = member.getEmail();
             this.sex = member.getSex();
+            this.rrn = member.getRrn();
             this.phone = member.getPhone();
-            this.address = member.getAddress();
-            this.joinStatus = member.getStatus();
-            this.centerId = member.getCenter().getId();
-        }
-    }
-
-    @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class SimpleMemberResponseDto {
-        private Long id;
-        private String name;
-
-        public SimpleMemberResponseDto(Member member){
-            this.id = member.getId();
-            this.name = member.getName();
+            this.city = member.getAddress().getCity();
+            this.street = member.getAddress().getStreet();
+            this.zipcode = member.getAddress().getZipcode();
+            this.status = member.getStatus();
+            this.type = member.getClass().getSimpleName().substring(0,1);
         }
     }
 
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
     static class PatientResponseDto {
         private Long id;
+        private String type;
+        private String loginId;
+        private String password;
         private String name;
+        private String email;
+        private String sex;
+        private String rrn; // resident registration number
+        private String phone;
+        private String city;
+        private String street;
+        private String zipcode;
         private Long managerId;
         private String managerName;
         private int grade;
+        private JoinStatus status;
 
         public PatientResponseDto(Patient patient){
             this.id = patient.getId();
             this.name = patient.getName();
+            this.loginId = patient.getLoginId();
+            this.password = patient.getPassword();
+            this.email = patient.getEmail();
+            this.sex = patient.getSex();
+            this.rrn = patient.getRrn(); // resident registration number
+            this.phone = patient.getPhone();
+            this.city = patient.getAddress().getCity();
+            this.street = patient.getAddress().getStreet();
+            this.zipcode = patient.getAddress().getZipcode();
             this.managerId = patient.getManager().getId();
             this.managerName = patient.getManager().getName();
             this.grade = patient.getGrade();
+            this.status = patient.getStatus();
+            this.type = patient.getClass().getSimpleName().substring(0,1);
+        }
+    }
+
+    @Data // JSON 요청의 응답으로 보낼 데이터 클래스
+    static class FamilyResponseDto {
+        private Long id;
+        private String type;
+        private String loginId;
+        private String password;
+        private String name;
+        private String email;
+        private String sex;
+        private String rrn; // resident registration number
+        private String phone;
+        private String city;
+        private String street;
+        private String zipcode;
+        private Long patientId;
+        private String patientName;
+        private JoinStatus status;
+
+        public FamilyResponseDto(Family family){
+            this.id = family.getId();
+            this.loginId = family.getLoginId();
+            this.password = family.getPassword();
+            this.name = family.getName();
+            this.email = family.getEmail();
+            this.sex = family.getSex();
+            this.rrn = family.getRrn();
+            this.phone = family.getPhone();
+            this.city = family.getAddress().getCity();
+            this.street = family.getAddress().getStreet();
+            this.zipcode = family.getAddress().getZipcode();
+            this.patientId = family.getPatient().getId();
+            this.patientName = family.getPatient().getName();
+            this.status = family.getStatus();
+            this.type = family.getClass().getSimpleName().substring(0,1);
         }
     }
 

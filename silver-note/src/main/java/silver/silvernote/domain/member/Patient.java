@@ -28,9 +28,15 @@ public class Patient extends Member {
     private Member manager;
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Patient(Member manager, Center center, String name,  String sex, String rrn, String phone, Address address, int grade, JoinStatus status){
-        createMember(center, name, sex, rrn, phone, address, status);
+    public Patient(Member manager, Center center,  String loginId, String password,String name,  String email, String sex, String rrn, String phone, Address address, int grade, JoinStatus status){
+        createMember(center, loginId, password, name, email, sex, rrn, phone, address, status);
         this.manager = manager;
+        this.grade = grade;
+    }
+
+    public void changeManager(Member manager){ this.manager = manager; }
+
+    public void updateGrade(int grade) {
         this.grade = grade;
     }
 }
