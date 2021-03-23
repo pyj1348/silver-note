@@ -8,10 +8,8 @@
         - id : Long
         - name : String
         - phone : String
-        - address :
-            - city : String
-            - street : String
-            - zipcode : Stirng
+        - address : String
+        - zipcode : Stirng
         - description : String
 
 
@@ -22,9 +20,8 @@
     - Body : 
         - name : String
         - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
+        - address : String
+        - zipcode : Stirng
         - description : String
         
 * 수정
@@ -33,9 +30,8 @@
     - URL : "/centers/{id}"
     - Body : 
         - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
+        - address : String
+        - zipcode : Stirng
         - description : String
     - Return :
         - id : Long 
