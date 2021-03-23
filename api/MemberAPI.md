@@ -15,8 +15,7 @@
             - phone : String
             - sex : String
             - rrn : String // 주민등록번호
-            - city : String
-            - street : String
+            - address : String
             - zipcode : Stirng
             - status : String // 앱 회원가입 여부;
             - centerId : Long
@@ -37,8 +36,7 @@
             - phone : String
             - sex : String
             - rrn : String // 주민등록번호
-            - city : String
-            - street : String
+            - address : String
             - zipcode : Stirng
             - status : String // 앱 회원가입 여부;
             - centerId : Long
@@ -59,8 +57,7 @@
             - phone : String
             - sex : String
             - rrn : String // 주민등록번호
-            - city : String
-            - street : String
+            - address : String
             - zipcode : Stirng
             - status : String // 앱 회원가입 여부;
             - centerId : Long
@@ -84,8 +81,7 @@
             - phone : String
             - sex : String
             - rrn : String // 주민등록번호
-            - city : String
-            - street : String
+            - address : String
             - zipcode : Stirng
             - status : String // 앱 회원가입 여부;
             - centerId : Long
@@ -108,8 +104,7 @@
             - phone : String
             - sex : String
             - rrn : String // 주민등록번호
-            - city : String
-            - street : String
+            - address : String
             - zipcode : Stirng
             - status : String // 앱 회원가입 여부;
             - centerId : Long
@@ -125,8 +120,7 @@
         - sex : String
         - rrn : String // 주민등록번호
         - phone : String
-        - city : String
-        - street : String
+        - address : String
         - zipcode : Stirng
         - centerId : Long
         - type : String // 멤버 구분
@@ -134,15 +128,30 @@
         - id : Long 
         - date : Date // 처리시각
         
-* 수정
+* 관리자 / 근로자 / 가족 정보 수정
 
     - 방식 : PUT 
     - URL : "/members/{id}"
     - Body : 
         - phone : String
-        - city : String
-        - street : String
-        - zipcode : String
+        - address : String
+        - zipcode : Stirng
+        - email : String
+    - Return :
+        - id : Long 
+        - date : Date // 처리시각
+
+* 회원 정보 수정
+
+    - 방식 : PUT 
+    - URL : "/members/paitents/{id}"
+    - Body : 
+        - phone : String
+        - address : String
+        - zipcode : Stirng
+        - email : String
+        - managerId : Long
+        - grade : int
     - Return :
         - id : Long 
         - date : Date // 처리시각
@@ -224,8 +233,7 @@
         - phone : String
         - sex : String
         - rrn : String // 주민등록번호
-        - city : String
-        - street : String
+        - address : String
         - zipcode : Stirng
         - centerId : Long
     - Return :
@@ -244,8 +252,7 @@
         - phone : String
         - sex : String
         - rrn : String // 주민등록번호
-        - city : String
-        - street : String
+        - address : String
         - zipcode : Stirng
         - patientId : Long
         - centerId : Long
