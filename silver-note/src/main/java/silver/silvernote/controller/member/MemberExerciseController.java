@@ -1,4 +1,4 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller.member;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ import silver.silvernote.service.MemberService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -108,9 +107,6 @@ public class MemberExerciseController {
     static class MemberExerciseRequestDto {
         @NotNull(message = "날짜를 확인하세요")
         private LocalDate date;
-
-        @Size(min = 0)
-        private int progress;
 
         @NotNull(message = "멤버 ID를 확인하세요")
         private Long memberId;

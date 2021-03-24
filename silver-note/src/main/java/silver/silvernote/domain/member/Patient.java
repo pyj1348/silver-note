@@ -5,8 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import silver.silvernote.domain.Address;
-import silver.silvernote.domain.Center;
+import silver.silvernote.domain.center.Center;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,8 +27,9 @@ public class Patient extends Member {
     private Member manager;
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Patient(Member manager, Center center,  String loginId, String password,String name,  String email, String sex, String rrn, String phone, Address address, int grade, JoinStatus status){
-        createMember(center, loginId, password, name, email, sex, rrn, phone, address, status);
+    public Patient(Member manager, Center center,  String loginId, String password,String name,
+                   String email, String sex, String rrn, String phone, String address, String zipcode, int grade, JoinStatus status){
+        createMember(center, loginId, password, name, email, sex, rrn, phone, address, zipcode, status);
         this.manager = manager;
         this.grade = grade;
     }

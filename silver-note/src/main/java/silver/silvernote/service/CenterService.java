@@ -3,8 +3,8 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Address;
-import silver.silvernote.domain.Center;
+import silver.silvernote.domain.center.Center;
+import silver.silvernote.domain.center.PaymentStatus;
 import silver.silvernote.repository.CenterRepository;
 
 import java.util.List;
@@ -30,10 +30,21 @@ public class CenterService {
      * 정보 수정
      */
     @Transactional
-    public void updateData(Long id, String name, String phone, String description, Address address){
+    public Long updateData(Long id, String name, String phone, String description, String address, String zipcode){
         Center center = centerRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        center.updateData(name, phone, description, address);
+        center.updateData(name, phone, description, address, zipcode);
         centerRepository.save(center);
+
+        return center.getId();
+    }
+
+    @Transactional
+    public Long updateStatus(Long id, PaymentStatus status){
+        Center center = centerRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        center.updateStatus(status);
+        centerRepository.save(center);
+
+        return  center.getId();
     }
 
     /**

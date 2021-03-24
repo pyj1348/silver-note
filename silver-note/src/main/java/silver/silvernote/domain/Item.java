@@ -22,21 +22,21 @@ public class Item {
     @Column(name = "item_id")
     private Long id;
 
-    @NotBlank
-    private String name;
+    @Positive(message = "기간을 확인하세요")
+    private Long month;
 
     @Positive(message = "가격을 확인하세요")
-    private int price;
+    private Long price;
 
     // 분류?
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Item(String name, int price) {
-        this.name = name;
+    public Item(Long month, Long price) {
+        this.month = month;
         this.price = price;
     }
-    public void updateData(String name, int price) {
-        this.name = name;
+    public void updateData(Long month, Long price) {
+        this.month = month;
         this.price = price;
     }
 }

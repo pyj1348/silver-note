@@ -1,18 +1,18 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import silver.silvernote.domain.Center;
-import silver.silvernote.domain.Schedule;
+import silver.silvernote.domain.center.Center;
+import silver.silvernote.domain.Notification;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.HttpStatusEnum;
 import silver.silvernote.responsemessage.Message;
 import silver.silvernote.service.CenterService;
-import silver.silvernote.service.ScheduleService;
+import silver.silvernote.service.NotificationService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -25,17 +25,17 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-public class ScheduleController {
+public class NotificationController {
 
-    private final ScheduleService scheduleService;
+    private final NotificationService notificationService;
     private final CenterService centerService;
 
     /**
      * 조회
      * */
-    @GetMapping("/schedules")
-    public ResponseEntity<Message> findSchedules() {
-        List<ScheduleResponseDto> collect = scheduleService.findSchedules().stream().map(ScheduleResponseDto::new).collect(Collectors.toList());
+    @GetMapping("/notifications")
+    public ResponseEntity<Message> findNotifications() {
+        List<NotificationResponseDto> collect = notificationService.findNotifications().stream().map(NotificationResponseDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
@@ -46,21 +46,21 @@ public class ScheduleController {
     /**
      * 생성
      * */
-    @PostMapping("/schedules/new")
-    public ResponseEntity<Message> saveSchedule(@RequestBody @Valid ScheduleController.ScheduleRequestDto request) {
+    @PostMapping("/notifications/new")
+    public ResponseEntity<Message> saveNotification(@RequestBody @Valid NotificationRequestDto request) {
 
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
 
-        Schedule schedule = Schedule.BuilderByParam()
+        Notification notification = Notification.BuilderByParam()
                     .date(request.getDate())
                     .context(request.getContext())
                     .center(center)
                     .build();
         
-        scheduleService.save(schedule);
+        notificationService.save(notification);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(schedule.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(notification.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.CREATED);
     }
@@ -68,11 +68,11 @@ public class ScheduleController {
     /**
      * 수정
      * */
-    @PutMapping("/schedules/{id}")
-    public ResponseEntity<Message> updateContext(@PathVariable("id") Long id,
-                                              @RequestBody String context) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
+    @PutMapping("/notifications/{id}")
+    public ResponseEntity<Message> updateData(@PathVariable("id") Long id,
+                                              @RequestBody NotificationUpdateRequestDto request) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
 
-        scheduleService.updateContext(id, context);
+        notificationService.updateData(id, request.getTitle(), request.getContext());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -83,10 +83,10 @@ public class ScheduleController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/schedules/{id}")
-    public ResponseEntity<Message> deleteSchedule(@PathVariable("id") Long id) {
+    @DeleteMapping("/notifications/{id}")
+    public ResponseEntity<Message> deleteNotification(@PathVariable("id") Long id) {
 
-        scheduleService.deleteSchedule(id);
+        notificationService.deleteNotification(id);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -97,17 +97,33 @@ public class ScheduleController {
     /**
      * Request DTO
      * */
-    @Data
-    static class ScheduleRequestDto {
 
-        @NotNull(message = "날짜를 확인하세요")
-        private LocalDate date;
+    @Data
+    static class NotificationUpdateRequestDto {
+
+        @NotBlank(message = "제목을 확인하세요")
+        private String title;
 
         @NotBlank(message = "내용를 확인하세요")
         private String context;
 
-        @NotNull(message = "센터 ID를 확인하세요")
+    }
+
+
+    @Data
+    static class NotificationRequestDto {
+
+        @NotBlank(message = "제목을 확인하세요")
+        private String title;
+
+        @NotBlank(message = "내용를 확인하세요")
+        private String context;
+
+        @NotNull (message = "센터 ID를 확인하세요")
         private Long centerId;
+
+        @NotNull(message = "날짜를 확인하세요")
+        private LocalDate date;
 
     }
 
@@ -116,15 +132,17 @@ public class ScheduleController {
      * Response DTO
      * */
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class ScheduleResponseDto {
+    static class NotificationResponseDto {
         private Long id;
-        private LocalDate date;
+        private String title;
         private String context;
+        private LocalDate date;
 
-        public ScheduleResponseDto(Schedule schedule) {
-            this.id = schedule.getId();
-            this.date = schedule.getDate();
-            this.context = schedule.getContext();
+        public NotificationResponseDto(Notification notification) {
+            this.id = notification.getId();
+            this.title = notification.getTitle();
+            this.context = notification.getContext();
+            this.date = notification.getDate();
         }
     }
 }

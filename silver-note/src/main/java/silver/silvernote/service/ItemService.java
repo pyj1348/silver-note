@@ -29,9 +29,9 @@ public class ItemService {
      * 정보 변경
      */
     @Transactional
-    public void updateData(Long id, String name, int price){
+    public void updateData(Long id, Long month, Long price){
         Item item = itemRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        item.updateData(name, price);
+        item.updateData(month, price);
         itemRepository.save(item);
     }
 

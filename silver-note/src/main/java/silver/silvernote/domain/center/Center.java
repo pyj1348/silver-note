@@ -1,14 +1,11 @@
-package silver.silvernote.domain;
+package silver.silvernote.domain.center;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -28,20 +25,34 @@ public class Center {
     private String description;
 
     @NotNull
-    private Address address;
+    private String address;
+
+    @NotNull
+    private String zipcode;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus status;
+
+
 
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public Center(String name, String phone, String description, Address address) {
+    public Center(String name, String phone, String description, String address, String zipcode, PaymentStatus status) {
         this.name = name;
         this.phone = phone;
         this.description = description;
         this.address = address;
+        this.zipcode = zipcode;
+        this.status = status;
     }
 
-    public void updateData(String name, String phone, String description, Address address){
+    public void updateData(String name, String phone, String description, String address, String zipcode){
         this.name = name;
         this.phone = phone;
         this.description = description;
         this.address = address;
+        this.zipcode = zipcode;
     }
+
+    public void updateStatus(PaymentStatus status){ this.status = status; }
 }

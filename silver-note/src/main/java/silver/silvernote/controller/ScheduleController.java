@@ -1,20 +1,18 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import silver.silvernote.domain.Album;
-import silver.silvernote.domain.Center;
+import silver.silvernote.domain.center.Center;
+import silver.silvernote.domain.Schedule;
 import silver.silvernote.domain.dto.SimpleResponseDto;
-import silver.silvernote.domain.member.Member;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.HttpStatusEnum;
 import silver.silvernote.responsemessage.Message;
-import silver.silvernote.service.AlbumService;
 import silver.silvernote.service.CenterService;
-import silver.silvernote.service.MemberService;
+import silver.silvernote.service.ScheduleService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -27,18 +25,17 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-public class AlbumController {
+public class ScheduleController {
 
-    private final AlbumService albumService;
+    private final ScheduleService scheduleService;
     private final CenterService centerService;
-    private final MemberService memberService;
 
     /**
      * 조회
      * */
-    @GetMapping("/albums")
-    public ResponseEntity<Message> findAlbums() {
-        List<AlbumResponseDto> collect = albumService.findAlbums().stream().map(AlbumResponseDto::new).collect(Collectors.toList());
+    @GetMapping("/schedules")
+    public ResponseEntity<Message> findSchedules() {
+        List<ScheduleResponseDto> collect = scheduleService.findSchedules().stream().map(ScheduleResponseDto::new).collect(Collectors.toList());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", collect), // STATUS, MESSAGE, DATA
@@ -49,24 +46,21 @@ public class AlbumController {
     /**
      * 생성
      * */
-    @PostMapping("/albums/new")
-    public ResponseEntity<Message> saveAlbum(@RequestBody @Valid AlbumRequestDto request) {
+    @PostMapping("/schedules/new")
+    public ResponseEntity<Message> saveSchedule(@RequestBody @Valid ScheduleController.ScheduleRequestDto request) {
 
         Center center = centerService.findOne(request.getCenterId()).orElseThrow(NoSuchElementException::new);
-        Member member = memberService.findOne(request.getMemberId()).orElseThrow(NoSuchElementException::new);
 
-        Album album = Album.BuilderByParam()
+        Schedule schedule = Schedule.BuilderByParam()
                     .date(request.getDate())
-                    .title(request.getTitle())
                     .context(request.getContext())
                     .center(center)
-                    .writer(member)
                     .build();
         
-        albumService.save(album);
+        scheduleService.save(schedule);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(album.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.CREATED, "리소스가 생성되었습니다", new SimpleResponseDto(schedule.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.CREATED);
     }
@@ -74,11 +68,11 @@ public class AlbumController {
     /**
      * 수정
      * */
-    @PutMapping("/albums/{id}")
-    public ResponseEntity<Message> updateData(@PathVariable("id") Long id,
-                                              @RequestBody @Valid AlbumUpdateRequestDto request) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
+    @PutMapping("/schedules/{id}")
+    public ResponseEntity<Message> updateContext(@PathVariable("id") Long id,
+                                              @RequestBody String context) { // 향후 파라미터가 많아지면 DTO로 수정 해야함
 
-        albumService.updateData(id, request.getTitle(), request.getContext());
+        scheduleService.updateContext(id, context);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -89,10 +83,10 @@ public class AlbumController {
     /**
      * 삭제
      * */
-    @DeleteMapping("/albums/{id}")
-    public ResponseEntity<Message> deleteAlbum(@PathVariable("id") Long id) {
+    @DeleteMapping("/schedules/{id}")
+    public ResponseEntity<Message> deleteSchedule(@PathVariable("id") Long id) {
 
-        albumService.deleteAlbum(id);
+        scheduleService.deleteSchedule(id);
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -104,22 +98,7 @@ public class AlbumController {
      * Request DTO
      * */
     @Data
-    static class AlbumUpdateRequestDto {
-
-        @NotBlank(message = "제목을 확인하세요")
-        private String title;
-
-        @NotBlank(message = "내용를 확인하세요")
-        private String context;
-
-    }
-
-
-    @Data
-    static class AlbumRequestDto {
-
-        @NotBlank(message = "제목을 확인하세요")
-        private String title;
+    static class ScheduleRequestDto {
 
         @NotNull(message = "날짜를 확인하세요")
         private LocalDate date;
@@ -127,13 +106,8 @@ public class AlbumController {
         @NotBlank(message = "내용를 확인하세요")
         private String context;
 
-
-        @NotNull(message = "멤버 ID를 확인하세요")
-        private Long memberId;
-
         @NotNull(message = "센터 ID를 확인하세요")
         private Long centerId;
-
 
     }
 
@@ -142,17 +116,15 @@ public class AlbumController {
      * Response DTO
      * */
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
-    static class AlbumResponseDto {
+    static class ScheduleResponseDto {
         private Long id;
-        private String title;
         private LocalDate date;
         private String context;
 
-        public AlbumResponseDto(Album album) {
-            this.id = album.getId();
-            this.title = album.getTitle();
-            this.date = album.getDate();
-            this.context = album.getContext();
+        public ScheduleResponseDto(Schedule schedule) {
+            this.id = schedule.getId();
+            this.date = schedule.getDate();
+            this.context = schedule.getContext();
         }
     }
 }

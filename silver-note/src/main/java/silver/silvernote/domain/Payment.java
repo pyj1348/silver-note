@@ -15,36 +15,40 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberLearning {
+@NoArgsConstructor (access = AccessLevel.PROTECTED)
+public class Payment {
 
     @Id
     @GeneratedValue
-    @Column(name = "member_learning_id")
+    @Column (name = "payment_id")
     private Long id;
 
+    @NotNull
+    private LocalDate paymentDate;
+
+    @NotNull
+    private LocalDate expiredDate;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @NotNull
-    private LocalDate date;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "center_id")
     private Center center;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "learning_id")
-    private Learning learning;
-
     @Builder(builderClassName = "BuilderByParam", builderMethodName = "BuilderByParam")
-    public MemberLearning(Member member, Learning learning, LocalDate date) {
+    public Payment(Long id, LocalDate paymentDate, LocalDate expiredDate, Item item, Member member, Center center) {
+        this.id = id;
+        this.paymentDate = paymentDate;
+        this.expiredDate = expiredDate;
+        this.item = item;
         this.member = member;
-        this.center = member.getCenter();
-        this.learning = learning;
-        this.date = date;
+        this.center = center;
     }
 
 }

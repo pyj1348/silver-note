@@ -1,11 +1,11 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import silver.silvernote.domain.Center;
+import silver.silvernote.domain.center.Center;
 import silver.silvernote.domain.Meal;
 import silver.silvernote.domain.Menu;
 import silver.silvernote.domain.dto.SimpleResponseDto;

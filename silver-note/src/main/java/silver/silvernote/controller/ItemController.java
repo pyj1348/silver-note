@@ -1,4 +1,4 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import silver.silvernote.service.ItemService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class ItemController {
     @PostMapping("/items/new")
     public ResponseEntity<Message> saveItem(@RequestBody @Valid ItemRequestDto request) {
         Item item = Item.BuilderByParam()
-                    .name(request.getName())
+                    .month(request.getMonth())
                     .price(request.getPrice())
                     .build();
         
@@ -62,7 +63,7 @@ public class ItemController {
     @PutMapping("/items/{id}")
     public ResponseEntity<Message> updateItem(@PathVariable("id") Long id, @RequestBody ItemRequestDto request) {
 
-        itemService.updateData(id, request.getName(), request.getPrice());
+        itemService.updateData(id, request.getMonth(), request.getPrice());
 
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                 new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
@@ -91,10 +92,11 @@ public class ItemController {
     @Data
     static class ItemRequestDto {
 
-        @NotBlank (message = "이름을 확인하세요")
-        private String name;
+        @Positive(message = "기간을 확인하세요")
+        private Long month;
 
-        private int price;
+        @Positive (message = "가격을 확인하세요")
+        private Long price;
 
     }
 
@@ -105,12 +107,12 @@ public class ItemController {
     @Data // JSON 요청의 응답으로 보낼 데이터 클래스
     static class ItemResponseDto {
         private Long id;
-        private String name;
-        private int price;
+        private Long month;
+        private Long price;
 
         public ItemResponseDto(Item item) {
             this.id = item.getId();
-            this.name = item.getName();
+            this.month = item.getMonth();
             this.price = item.getPrice();
         }
     }

@@ -3,7 +3,6 @@ package silver.silvernote.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import silver.silvernote.domain.Address;
 import silver.silvernote.domain.member.*;
 import silver.silvernote.repository.member.*;
 
@@ -43,9 +42,9 @@ public class MemberService {
      * 정보 수정
      */
     @Transactional
-    public Long updateData(Long id, String email, String phone, Address address) {
+    public Long updateData(Long id, String email, String phone, String address, String zipcode) {
         Member member = memberRepository.findById(id).orElseThrow(NoSuchElementException::new);
-        member.updateData(email, phone, address);
+        member.updateData(email, phone, address, zipcode);
         memberRepository.save(member);
 
         return member.getId();

@@ -1,4 +1,4 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class LearningController {
     private final LearningCategoryService categoryService;
 
     /**
-     * 조회
+     * 전체 학습 조회
      * */
     @GetMapping("/learnings/all")
     public ResponseEntity<Message> findLearnings() {
@@ -41,6 +41,9 @@ public class LearningController {
                 HttpStatus.OK);
     }
 
+    /**
+     * 카테고리별 학습 조회
+     * */
     @GetMapping("/learnings")
     public ResponseEntity<Message> findLearningsByCategory(@RequestParam ("categoryId") Long categoryId) {
         LearningCategory category = categoryService.findOne(categoryId).orElseThrow(NoSuchElementException::new);

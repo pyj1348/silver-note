@@ -1,4 +1,4 @@
-package silver.silvernote.controller.admin;
+package silver.silvernote.controller.member;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -126,16 +126,16 @@ public class MemberLearningController {
     @Data
     static class MemberLearningRequestDto {
 
-        @NotNull
+        @NotNull (message = "시작 날짜를 확인하세요")
         private LocalDate start;
 
-        @NotNull
+        @NotNull (message = "마지막 날짜를 확인하세요")
         private LocalDate end;
 
-        @NotNull
+        @NotNull (message = "멤버 ID를 확인하세요")
         private List<Long> memberIds;
 
-        @NotNull
+        @NotNull (message = "학습일정을 확인하세요")
         private List<DailyLearningsDto> data;
 
     }
@@ -143,10 +143,10 @@ public class MemberLearningController {
     @Data
     static class DailyLearningsDto {
 
-        @NotNull
+        @NotNull (message = "학습날짜를 확인하세요")
         private LocalDate date;
 
-        @NotNull
+        @NotNull (message = "학습 ID를 확인하세요")
         private List<Long> learningIds;
     }
 
