@@ -6,17 +6,16 @@
     - URL : "/items"
     - Return :
         - id : Long
-        - name : String
-        - price : int
-        - date : Date
+        - month : Long
+        - price : Long
 
 * 등록
 
     - 방식 : POST 
     - URL : "/items/new"
     - Body : 
-        - name : String
-        - price : int
+        - month : Long
+        - price : Long
     - Return :
         - id : Long 
         - date : Date // 처리시각 
@@ -26,8 +25,8 @@
     - 방식 : PUT 
     - URL : "/items/{id}"
     - Body : 
-        - name : String
-        - price : int
+        - month : Long
+        - price : Long
     - Return :
         - id : Long 
         - date : Date // 처리시각 
