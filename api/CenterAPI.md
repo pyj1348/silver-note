@@ -1,9 +1,26 @@
 ### Center 센터
 
-* 조회
+* 전체 센터 조회
 
     - 방식 : GET 
-    - URL : "/centers"
+    - URL : "/centers/all"
+    - Return :
+        - List : 
+            - id : Long
+            - name : String
+            - phone : String
+            - address : String
+            - zipcode : Stirng
+            - description : String
+            - status : String // 결제 상태
+
+
+* 개별 센터 조회
+
+    - 방식 : GET 
+    - URL : "/centers?id=?"
+    - Param :
+        - id : Long 
     - Return :
         - id : Long
         - name : String
@@ -12,7 +29,6 @@
         - zipcode : Stirng
         - description : String
         - status : String // 결제 상태
-
 
 * 등록
 
