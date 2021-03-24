@@ -89,8 +89,10 @@ Manger, Emplyee, Patient, Family extends Member
 센터관리자가 멤버별로 등록된 학습을 일정으로 관리하는 엔티티
 
 
-### 14. User 앱 사용자
-[User API로 이동](./api/UserAPI.md)
+### 14. Payment 결제
+[Payment API로 이동](./api/PaymentAPI.md)
 
-앱을 사용하는 유저 엔티티
+센터의 구독 결제 정보를 저장하는 엔티티
+
+
 
