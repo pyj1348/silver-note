@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import silver.silvernote.domain.center.Center;
+import silver.silvernote.domain.center.PaymentStatus;
 import silver.silvernote.domain.dto.SimpleResponseDto;
 import silver.silvernote.responsemessage.HttpHeaderCreator;
 import silver.silvernote.responsemessage.HttpStatusEnum;
@@ -63,6 +64,7 @@ public class CenterController {
                     .description(request.getDescription())
                     .address(request.getAddress())
                     .zipcode(request.getZipcode())
+                    .status(PaymentStatus.NOT_PAYED)
                     .build();
 
         centerService.save(center);
@@ -138,6 +140,7 @@ public class CenterController {
         private String address;
         private String zipcode;
         private String description;
+        private PaymentStatus status;
 
         public CenterResponseDto(Center center){
             this.id = center.getId();
@@ -146,6 +149,7 @@ public class CenterController {
             this.description = center.getDescription();
             this.address = center.getAddress();
             this.zipcode = center.getZipcode();
+            this.status = center.getStatus();
         }
     }
 }

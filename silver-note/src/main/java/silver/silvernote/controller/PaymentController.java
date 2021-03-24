@@ -105,7 +105,7 @@ public class PaymentController {
         @NotNull(message = "멤버 ID를 확인하세요")
         private Long memberId;
 
-        @NotNull(message = "멤버 ID를 확인하세요")
+        @NotNull(message = "센터 ID를 확인하세요")
         private Long centerId;
 
     }
