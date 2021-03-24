@@ -11,6 +11,7 @@
         - address : String
         - zipcode : Stirng
         - description : String
+        - status : String // 결제 상태
 
 
 * 등록
