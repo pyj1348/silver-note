@@ -15,9 +15,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/js/main.js" defer></script>
+    <script src="/js/cookie.js" defer></script>
+    <script src="/js/navbar.js" defer></script>   
+    <script src="/js/schedule.js" defer></script>
 </head>
 <body>
+
         <!-- NavBar -->
         <nav id="navbar">
             <div class="navbar__logo">
@@ -26,10 +29,10 @@
             </div>
             <div class="navbar__menu">
                 <ul class="navbar__menu">
-                    <li class="navbar__menu__item active" data-link="#home">Home</li>
-                    <li class="navbar__menu__item" data-link="#about">로그인</li>
-                    <li class="navbar__menu__item" data-link="#skills">회원가입</li>
-                    <li class="navbar__menu__item" data-link="#work">공지사항</li>
+                    <li class="navbar__menu__item" id="member-name"></li>
+                    <li class="navbar__menu__item">
+                        <button class="logout-btn" onclick="logout()">로그아웃</button>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -40,9 +43,16 @@
             <section id="menu">
                 <div class="menu-list">
                     <ul>
-                        <li class="menu-list__item">마이페이지</li>
-                        <li class="menu-list__item">인지활동 프로그램 생성</li>
-                        <li class="menu-list__item">문제낱장 출력</li>
+
+                        <li class="menu-list__item">
+                            <a href="./schedule.html">센터 스케줄 관리</a>
+                        </li>
+                        <li class="menu-list__item">
+                            <a href="./center_member.html">센터 회원 관리</a>                            
+                        </li>
+                        <li class="menu-list__item">
+                            <a href="./payment.html">결제 관리</a>                            
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -59,61 +69,65 @@
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
-                <div class="person-control">
+                <!-- <div class="person-control">
                     <button class="person-control__add">대상자 추가</button>
                     <button class="person-control__remove">대상자 삭제</button>
-                </div>
+                </div> -->
                 <table border="1" class="person-table">
                     <th class="person-table__header"></th>
-                    <th class="person-table__header">ㅁ</th>
+                    <th class="person-table__header">
+                        <input type='checkbox' id='total' onclick='selectAll(this)' />
+                    </th>
+                    <th class="person-table__header">대상자명</th>
                     <th class="person-table__header">담당자명</th>
                     <th class="person-table__header">등급</th>
-                    <tr><!-- 첫번째 줄 시작 -->
-                        <td>1</td>
-                        <td>ㅁ</td>
-                        <td>박용진</td>
-                        <td>5</td>
-                    </tr><!-- 첫번째 줄 끝 -->
                 </table>
             </section>
 
             <section id="content">
                 <div class="content__top">
                     <div class="problem-category">
-                        <h2>대상자 기본 정보</h2>
+                        <h2>문제 영역</h2>
                         <div class="table-box">
                             <table border="1" class="problem-category__table">
                                 <tr>
-                                    <td colspan = "2" class="problem-header">인지영역</td>
+                                    <td class="problem-header">제공 영역</td>
+                                    <td class="problem-header">영역 분류</td>
                                     <td class="problem-header">문제선택</td>
                                 </tr>
                                 <tr>
-                                    <td rowspan = "2">인지활동(1)</td>
-                                    <td>시지각</td>
-                                    <td><button class="visual__btn problem__button">문제선택</button></td>
+                                    <td rowspan="4">인지활동</td>
+                                    <td>시지각 영역</td>
+                                    <td><button class="problem-selection-btn category6__btn">문제선택</button></td>
                                 </tr>
                                 <tr>
-                                    
-                                    <td>주의집중력</td>
-                                    <td><button class="concentration__btn problem__button">문제선택</button></td>
+                                    <td>주의 집중력 영역</td>
+                                    <td><button class="problem-selection-btn category7__btn">문제선택</button></td>
                                 </tr>
                                 <tr>
-                                    <td rowspan = "3">인지활동(2)</td>
-                                    <td>사고능력</td>
-                                    <td><button class="thinking__btn problem__button">문제선택</button></td>
+                                    <td>언어 영역</td>
+                                    <td><button class="problem-selection-btn category8__btn">문제선택</button></td>
                                 </tr>
                                 <tr>
-                                    <td>언어능력</td>
-                                    <td><button class="language__btn problem__button">문제선택</button></td>
+                                    <td>회상 영역</td>
+                                    <td><button class="problem-selection-btn category9__btn">문제선택</button></td>
                                 </tr>
                                 <tr>
-                                    <td>회상활동</td>
-                                    <td><button class="remembrance__btn problem__button">문제선택</button></td>
+                                    <td rowspan="4">특별활동</td>
+                                    <td>신체활동</td>
+                                    <td><button class="problem-selection-btn category10__btn">문제선택</button></td>
                                 </tr>
                                 <tr>
-                                    <td>일상생활활동</td>
-                                    <td>일상생활활동</td>
-                                    <td><button class="life__btn problem__button">문제선택</button></td>
+                                    <td>만들기</td>
+                                    <td><button class="problem-selection-btn category11__btn">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    <td>요리</td>
+                                    <td><button class="problem-selection-btn category12__btn">문제선택</button></td>
+                                </tr>
+                                <tr>
+                                    <td>특화</td>
+                                    <td><button class="problem-selection-btn category13__btn">문제선택</button></td>
                                 </tr>
                             </table>
                         </div>
@@ -124,7 +138,7 @@
                         <div class="table-box">
                             <table border="1" class="problems__table">
                                 <tr>
-                                    <td colspan = "3" class="problem-header">시지각(하) 문제 선택</td>
+                                    <td colspan = "3" class="problem-header" id="dynamic-header">시지각(하) 문제 선택</td>
                                 </tr>
                             </table>
                         </div>
@@ -141,7 +155,14 @@
                 </div>
                 <div class="content__bottom">
                     <div class="schedule">
-                        <h2 class="tbCalendarYM" >2021년 2월</h2>
+                        <div class="schedule__header">
+                            <div class="schedule__left">
+                                <h2 class="tbCalendarYM" >2021년 2월</h2>
+                            </div>
+                            <div class="schedule__right">
+                                <button class="schedule-update">일정 업데이트</button>
+                            </div>
+                        </div>
                         <div class="table-box">
                                 
                             <table id="calendar" border="1" align="center">

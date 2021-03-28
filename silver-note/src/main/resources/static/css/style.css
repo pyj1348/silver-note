@@ -38,11 +38,14 @@
 * {
   box-sizing: border-box;
 }
-
+html,
 body {
   margin: 0;
-  //font-family: "Open Sans", sans-serif;
+  /* font-family: "Open Sans", sans-serif; */
   cursor: default;
+  height: 100%;
+  width: 100%;
+  /* background-color: pink; */
 }
 
 a {
@@ -76,6 +79,7 @@ th,
 td {
   border: 1px, solid #444444;
   padding: 10px;
+  text-align: center;
 }
 
 .person-table__header {
@@ -142,6 +146,7 @@ p {
 #menu {
   background-color: var(--color-pink);
   min-width: 200px;
+  min-height: 1400px;
   color: var(--color-grey);
   padding: 15px;
 }
@@ -232,7 +237,7 @@ p {
 }
 
 .problems__td {
-  height: 35px;
+  height: 55px;
   width: 33.3%;
 }
 
@@ -243,12 +248,28 @@ p {
 .remark__content {
   background-color: var(--color-white);
   min-height: 336.36px;
-  max-width: 350px;
+  min-width: 390px;
   padding: 20px;
 }
 
 .schedule {
   padding: 15px;
+}
+
+.schedule__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.problem-selection-btn {
+  background-color: var(--color-light-grey);
+  width: 100px;
+  height: 30px;
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
 }
 
 #calendar {
@@ -264,4 +285,293 @@ p {
 .calendar__number {
   background-color: #f4f9f9;
   width: 12.5%;
+}
+
+.schedule__right {
+  display: flex;
+  align-items: center;
+}
+
+.tbCalendarYM {
+  display: inline;
+}
+
+.schedule-update {
+  background-color: var(--color-light-grey);
+  margin: 5px;
+  padding: 5px 15px;
+  font-size: var(--font-small);
+  color: var(--color-white);
+  border-radius: var(--size-border-radius);
+}
+
+.bo_w_select {
+  width: 100%; /* 가로 사이즈 */
+  padding: 10px; /* 내부여백 */
+  padding-left: 12px;
+  border: 1px solid #ddd;
+  background: url(./arrow_down_18dp.png) no-repeat right 50%; /* 화살표 위치 */
+  background-size: 30px; /* 화살표 크기 */
+  border-radius: 4px;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 12px;
+  color: #000;
+  outline: none;
+}
+.bo_w_select:hover {
+  border: 1px solid #aaa;
+} /* 마우스오버 */
+
+/* personal-member page */
+
+.person-search__box {
+  display: flex;
+  padding-top: 20px;
+}
+
+.person-search__box__button {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  justify-content: center;
+  background-color: var(--color-dark-grey);
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
+}
+
+.search-content__filter {
+  padding: 10px; /* 내부여백 */
+  width: 150px;
+  padding-left: 12px;
+  border: 1px solid #ddd;
+  background: url(./arrow_down_18dp.png) no-repeat right 50%; /* 화살표 위치 */
+  background-size: 30px; /* 화살표 크기 */
+  border-radius: 4px;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 12px;
+  color: #000;
+  outline: none;
+  text-align-last: center;
+  text-align: center;
+  -ms-text-align-last: center;
+  -moz-text-align-last: center;
+  background-color: var(--color-white);
+}
+
+.search-content__text {
+  width: 60%;
+  padding: 10px; /* 내부여백 */
+  width: 500px;
+  padding-left: 12px;
+  border: 1px solid #ddd;
+  background: url(./arrow_down_18dp.png) no-repeat right 50%; /* 화살표 위치 */
+  background-size: 30px; /* 화살표 크기 */
+  border-radius: 4px;
+  box-sizing: border-box;
+  appearance: none;
+  font-size: 12px;
+  color: #000;
+  outline: none;
+  background-color: var(--color-white);
+  margin-right: 10px;
+}
+
+/* personal_member */
+#person-search {
+  min-width: 700px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+#person-list2 {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-pink);
+  padding: 30px;
+  min-width: 1300px;
+  min-height: 100%;
+}
+
+.transparent-border {
+  border-right: transparent;
+  width: 120px;
+}
+
+.person-table__header__number {
+  width: 100px;
+}
+
+.person-table__header__type {
+  width: 100px;
+}
+
+.person-table__header__id {
+  width: 200px;
+}
+
+.person-table__header__name {
+  width: 150px;
+}
+
+.person-table__header__sex {
+  width: 100px;
+}
+
+.person-table__header__address {
+  width: 400px;
+}
+
+.person-table__header__zipcode {
+  width: 200px;
+}
+
+.person-table__header__rrn {
+  width: 300px;
+}
+
+.person-table__header__email {
+  width: 300px;
+}
+
+.person-table__header__email {
+  width: 300px;
+}
+
+.person-table__header__phone {
+  width: 300px;
+}
+
+.person-table__header__manager {
+  width: 150px;
+}
+
+.person-table__header__grade {
+  width: 100px;
+}
+
+.person-table__header__status {
+  width: 150px;
+}
+
+.person-table__header__description {
+  width: 350px;
+}
+
+.logout-btn {
+  width: 100px;
+  height: 30px;
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
+}
+
+.drop-btn {
+  background-color: red;
+  width: 100px;
+  height: 30px;
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
+}
+
+.edit-btn {
+  background-color: var(--color-blue);
+  width: 100px;
+  height: 30px;
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
+}
+
+.create-btn {
+  background-color: green;
+  width: 100px;
+  height: 30px;
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: var(--size-border-radius);
+}
+
+/* contents page */
+#problem-list {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-pink);
+  padding: 30px;
+  min-width: 1300px;
+  min-height: 100%;
+}
+
+.brief_description {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border-color: transparent;
+  background-color: transparent;
+  font-size: medium;
+  text-align: center;
+}
+
+.brief_description_cell {
+  padding: 0;
+  height: 100%;
+}
+
+.long_description {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border-color: transparent;
+  background-color: transparent;
+  font-size: large;
+  text-align: center;
+}
+
+.long_description_cell {
+  padding: 0;
+  height: 100%;
+}
+
+.learning-problem {
+  display: inline;
+}
+
+.problem-list__top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* align-items: center; */
+  margin-bottom: 10px;
+}
+
+/* payment */
+
+.payment-btn {
+  background-color: var(--color-light-grey);
+  width: 150px;
+  height: 150px;
+  color: var(--color-light-white);
+  padding: 1px 10px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+.payment-p {
+  color: var(--color-white);
+}
+
+#payment {
+  margin: 10px;
+}
+
+.selected-date {
+  font-size: 22px;
 }

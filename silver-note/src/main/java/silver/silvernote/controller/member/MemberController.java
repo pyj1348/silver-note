@@ -166,7 +166,7 @@ public class MemberController {
         if (type.equals("approve"))
             memberService.updateStatus(id, JoinStatus.JOINED);
         else if (type.equals("decline"))
-            memberService.updateStatus(id, JoinStatus.YET);
+            memberService.deleteMember(id);
         else{
             return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
                     new Message(HttpStatusEnum.BAD_REQUEST, "메시지 형식이 올바르지 않습니다", "type을 확인하세요 (approve|decline)"), // STATUS, MESSAGE, DATA
@@ -174,10 +174,8 @@ public class MemberController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        Member member = memberService.findOne(id).orElseThrow(NoSuchElementException::new);
-
         return new ResponseEntity<>( // MESSAGE, HEADER, STATUS
-                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(member.getId(), LocalDateTime.now())), // STATUS, MESSAGE, DATA
+                new Message(HttpStatusEnum.OK, "성공적으로 완료되었습니다", new SimpleResponseDto(id, LocalDateTime.now())), // STATUS, MESSAGE, DATA
                 HttpHeaderCreator.createHttpHeader(),
                 HttpStatus.OK);
     }

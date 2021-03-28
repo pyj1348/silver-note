@@ -114,6 +114,7 @@ public class MemberLoginController {
                 .name(request.getName())
                 .loginId(request.getLoginId())
                 .password(request.getPassword())
+                .email(request.getEmail())
                 .sex(request.getSex())
                 .rrn(request.getRrn())
                 .phone(request.getPhone())
@@ -141,6 +142,7 @@ public class MemberLoginController {
                 .patient(patient)
                 .name(request.getName())
                 .loginId(request.getLoginId())
+                .email(request.getEmail())
                 .password(request.getPassword())
                 .sex(request.getSex())
                 .rrn(request.getRrn())
@@ -219,6 +221,9 @@ public class MemberLoginController {
         @NotBlank (message = "비밀번호를 확인하세요")
         private String password;
 
+        @NotNull (message = "이메일을 확인하세요")
+        private String email;
+
         @NotBlank (message = "주민등록번호를 확인하세요")
         @Pattern(regexp = "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|[3][01])-[1-4][0-9]{6}$", message = "주민등록번호를 확인하세요")
         private String rrn; // resident registration number
@@ -237,7 +242,7 @@ public class MemberLoginController {
         @NotBlank(message = "우편번호를 확인하세요")
         private String zipcode;
 
-        @NotBlank(message = "센터 ID를 확인하세요")
+        @NotNull(message = "센터 ID를 확인하세요")
         private Long centerId;
     }
 
@@ -252,6 +257,9 @@ public class MemberLoginController {
 
         @NotBlank (message = "비밀번호를 확인하세요")
         private String password;
+
+        @NotNull (message = "이메일을 확인하세요")
+        private String email;
 
         @NotBlank (message = "주민등록번호를 확인하세요")
         @Pattern(regexp = "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|[3][01])-[1-4][0-9]{6}$", message = "주민등록번호를 확인하세요")

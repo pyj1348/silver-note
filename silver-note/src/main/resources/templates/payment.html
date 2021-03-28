@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>실버앱</title>
+    <meta name="description" content="Portfolio for world-renowned software engineer Saul"/>
+    <meta name="author" content="Saul"/>
+    <link rel="icon" type="image/png" href="imgs/favicon.png" />
+    <script src="https://kit.fontawesome.com/27bd47abbf.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/cookie.js" defer></script>  
+    <script src="/js/navbar.js" defer></script> 
+    <script src="/js/payment.js" defer></script>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+
+</head>
+<body>
+        <!-- NavBar -->
+        <nav id="navbar">
+            <div class="navbar__logo">
+                <i class="fab fa-diaspora"></i>
+                <a href="#">실버앱</a>
+            </div>
+            <div class="navbar__menu">
+                <ul class="navbar__menu">
+                    <li class="navbar__menu__item" id="member-name"></li>
+                    <li class="navbar__menu__item">
+                        <button class="logout-btn" onclick="logout()">로그아웃</button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="section-container">
+
+            <!-- Menu -->
+            <section id="menu">
+                <div class="menu-list">
+                    <ul>
+
+                        <li class="menu-list__item">
+                            <a href="./schedule.html">센터 스케줄 관리</a>
+                        </li>
+                        <li class="menu-list__item">
+                            <a href="./center_member.html">센터 회원 관리</a>                            
+                        </li>
+                        <li class="menu-list__item">
+                            <a href="./payment.html">결제 관리</a>                            
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- 대상자 검색 -->
+            <section id="payment">
+                <h2>결제하기</h2>
+                    <button id="check_module" class="payment-btn" onclick="pay(100000)" type="button">
+                        <p class="payment-p">1개월 결제하기 <br><br> 100,000원</p>
+                    </button>
+                    <button id="check_module" class="payment-btn" onclick="pay(250000)" type="button">
+                        <p class="payment-p">3개월 결제하기 <br><br> 250,000원</p>
+                    </button>
+                    <button id="check_module" class="payment-btn"  onclick="pay(450000)" type="button">
+                        <p class="payment-p">6개월 결제하기 <br><br> 450,000원</p>
+                    </button>
+            </section>
+
+        </div>
+</body>
+</html>

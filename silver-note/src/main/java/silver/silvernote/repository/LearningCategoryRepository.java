@@ -13,7 +13,7 @@ public interface LearningCategoryRepository extends JpaRepository<LearningCatego
     @Query("SELECT lc FROM LearningCategory lc WHERE lc.id = lc.parent.id")
     List<LearningCategory> findAllTopCategory();
 
-    @Query("SELECT lc FROM LearningCategory lc WHERE lc.parent.id = :parentId")
+    @Query("SELECT lc FROM LearningCategory lc WHERE lc.parent.id = :parentId AND lc.id <> :parentId")
     List<LearningCategory> findAllByParent(@Param("parentId")Long parentId);
 
 }
