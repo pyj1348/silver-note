@@ -12,9 +12,9 @@
 
 센터에 소속된 멤버를 나타내는 엔티티
 
-Manger, Emplyee, Patient, Family는 Memeber를 상속한다
+Manger, Employee, Patient, Family는 Memeber를 상속한다
 
-Manger, Emplyee, Patient, Family extends Member
+Manger, Employee, Patient, Family extends Member
 
 
 ### 2. Center 센터
